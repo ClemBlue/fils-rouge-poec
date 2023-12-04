@@ -1,4 +1,4 @@
-<form method="post" {#action="{{ path('votre_route_pour_traiter_le_formulaire') }}"#}>
+<form id="formIngredient" method="post" {#action="{{ path('votre_route_pour_traiter_le_formulaire') }}"#}>
     <div>
         <label for="ingredient">Ingrédient:</label>
         <input type="text" id="ingredient" name="ingredient">
@@ -33,6 +33,10 @@
     <div>
         <label for="mots_cles">Mots-clés:</label>
         <input type="text" id="mots_cles" name="mots_cles">
+        <button id="ajouterMotCle" type="button">Ajouter</button>
+    </div>
+    <div id="liste_mots_cles">
+        <!-- La liste des mots-clés ajoutés apparaîtra ici -->
     </div>
     <div>
         <label for="co2">CO2:</label>

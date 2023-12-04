@@ -3,6 +3,7 @@
 /* Fonction pour faire la liste des ingrédients renseignés dans le formulaire d'ingrédient */
 $(document).ready(function() {
     var listeIngredients = [];
+    var listeMotsCles = [];
 
     // Fonction pour ajouter un ingrédient à la liste visuelle et à la liste JavaScript
     function ajouterIngredient(ingredient, quantite, unite) {
@@ -31,7 +32,6 @@ $(document).ready(function() {
         $('#liste_ingredients').append(nouvelIngredient);
     }
 
-    
     function actualiserListeIngredients() {
         $('#liste_ingredients').empty(); // Vider la liste visuelle
 
@@ -40,6 +40,33 @@ $(document).ready(function() {
             ajouterIngredient(ingredient.ingredient, ingredient.quantite, ingredient.unite);
         });
     }
+    function actualiserListeMotsCles() {
+        $('#liste_mots_cles').empty();
+
+        listeMotsCles.forEach(function(motCle) {
+            var nouvelElement = $('<div class="mot-cle"><p>' + motCle + '</p><button class="supprimer">Supprimer</button></div>');
+
+            nouvelElement.find('.supprimer').click(function() {
+                var index = $(this).parent().index();
+                $(this).parent().remove();
+                listeMotsCles.splice(index, 1);
+            });
+
+            $('#liste_mots_cles').append(nouvelElement);
+        });
+    }
+    $('#ajouterMotCle').on('click', function() {
+        var motCle = $('#mots_cles').val();
+
+        if (motCle !== '') {
+            listeMotsCles.push(motCle);
+            $('#mots_cles').val('');
+            actualiserListeMotsCles();
+        } else {
+            alert('Veuillez entrer un mot-clé.');
+        }
+    });
+
 
     // Gestionnaire d'événement pour le bouton "Ajouter"
     $('#ajouter').on('click', function() {
@@ -69,14 +96,14 @@ $(document).ready(function() {
     });
 
     // Gestionnaire d'événement pour la soumission du formulaire
-    $('form').submit(function(event) {
+    $('#formIngredient').submit(function(event) {
         event.preventDefault(); // Empêche l'envoi du formulaire par défaut
 
         // Récupération des valeurs du formulaire
         var formData = {
             ingredient: listeIngredients,
             portions: $('#portions').val(),
-            mots_cles: $('#mots_cles').val(),
+            mots_cles: listeMotsCles,
             co2: $('#co2').is(':checked'),
             calorie: $('#calorie').is(':checked')
         };
@@ -85,6 +112,7 @@ $(document).ready(function() {
         console.log(formData);
     });
 
+    //Modal pour modifier l'ingrédient
     $('#modifierForm').submit(function(event) {
         event.preventDefault();
         var nouvelIngredient = {
