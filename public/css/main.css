@@ -1,1 +1,13 @@
 /* Votre CSS ici */
+header {
+    color :red;
+    background-color: blueviolet;
+    display: flex;
+    flex-direction: row;
+    
+    
+}
+header img{
+    width: 150px;
+} 
+
