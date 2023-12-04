@@ -1,0 +1,64 @@
+<form method="post" {#action="{{ path('votre_route_pour_traiter_le_formulaire') }}"#}>
+    <div>
+        <label for="ingredient">Ingrédient:</label>
+        <input type="text" id="ingredient" name="ingredient">
+    </div>
+    <div>
+        <label for="quantite">Quantité:</label>
+        <input type="number" id="quantite" name="quantite">
+    </div>
+    <div>
+        <label for="unite">Unité:</label>
+        <select id="unite" name="unite">
+            <option value="grammes">Grammes</option>
+            <option value="millilitres">Millilitres</option>
+            <option value="cuillères à soupe">Cuillères à soupe</option>
+            <option value="cuillères à café">Cuillères à café</option>
+            <option value="nombre">Nombre</option>
+        </select>
+    </div>
+    <div>
+        <button id="ajouter" type="button">Ajouter</button>
+    </div>
+
+    <div id="liste_ingredients">
+        <!-- La liste des ingrédients ajoutés apparaîtra ici -->
+    </div>
+
+    
+    <div>
+        <label for="portions">Portions:</label>
+        <input type="number" id="portions" name="portions">
+    </div>
+    <div>
+        <label for="mots_cles">Mots-clés:</label>
+        <input type="text" id="mots_cles" name="mots_cles">
+    </div>
+    <div>
+        <label for="co2">CO2:</label>
+        <input type="checkbox" id="co2" name="co2">
+    </div>
+    <div>
+        <label for="calorie">Calorie:</label>
+        <input type="checkbox" id="calorie" name="calorie">
+    </div>
+    
+    <div>
+        <button type="submit">Envoyer</button>
+    </div>
+</form>
+
+<div id="modal" style="display: none;">
+    <form id="modifierForm">
+        <label for="modifierIngredient">Ingrédient:</label>
+        <input type="text" id="modifierIngredient" name="modifierIngredient"><br>
+
+        <label for="modifierQuantite">Quantité:</label>
+        <input type="text" id="modifierQuantite" name="modifierQuantite"><br>
+
+        <label for="modifierUnite">Unité:</label>
+        <input type="text" id="modifierUnite" name="modifierUnite"><br>
+
+        <input type="submit" value="Modifier">
+    </form>
+</div>
