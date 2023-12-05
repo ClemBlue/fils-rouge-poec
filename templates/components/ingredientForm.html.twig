@@ -1,7 +1,7 @@
 <form id="formIngredient" method="post" {#action="{{ path('votre_route_pour_traiter_le_formulaire') }}"#}>
 
     <!-- Première section avec des champs d'ingrédients -->
-    <div class="row bg-light py-3 mb-3">
+    <div class="row bg-light py-3 mb-3 flex s5">
         <div class="col-md-3 form-floating">
             <input type="text" class="form-control" id="ingredient" name="ingredient">
             <label for="ingredient">Ingrédient:</label>
@@ -21,47 +21,48 @@
             <label for="unite">Unité:</label>
         </div>
         <div class="col-md-3">
-            <button class="btn btn-primary" id="ajouter" type="button">+</button>
+            <button class="btn btn-primary" id="ajouter" type="button">Ajouter</button>
         </div>
     </div>
 
     <!-- Div pour la liste des ingrédients ajoutés -->
-    <div id="liste_ingredients" class="bg-success mb-3">
+    <div id="liste_ingredients" class="bg-success mb-3 s5">
         <!-- La liste des ingrédients ajoutés apparaîtra ici -->
     </div>
 
     <!-- Deuxième section avec des mots-clés -->
-    <div class="row bg-light py-3 mb-3">
-        <div class="col-md-9">
+    <div class="row bg-light py-3 mb-3 flex s3">
+        <div class="col-md-9 form-floating">
+            <input type="text" class="form-control" id="mots_cles" name="mots_cles">    
             <label for="mots_cles">Mots-clés:</label>
-            <input type="text" class="form-control" id="mots_cles" name="mots_cles">
         </div>
         <div class="col-md-3">
-            <button class="btn btn-primary" id="ajouterMotCle" type="button">+</button>
+            <button class="btn btn-primary" id="ajouterMotCle" type="button">Ajouter</button>
         </div>
     </div>
 
     <!-- Div pour la liste des mots-clés ajoutés -->
-    <div id="liste_mots_cles" class="bg-purple mb-3">
+    <div id="liste_mots_cles" class="bg-purple mb-3 s3">
         <!-- La liste des mots-clés ajoutés apparaîtra ici -->
     </div>
 
     <!-- Troisième section avec des champs de portions, CO2 et calories -->
-    <div class="row bg-light py-3 mb-3">
-        <div class="col-md-4">
-            <label for="portions">Portions:</label>
+    <div class="row bg-light py-3 mb-3 flex">
+        <div class="col-md-4 form-floating">
             <input type="number" class="form-control" id="portions" name="portions">
+            <label for="portions">Portions:</label>
         </div>
         <div class="col-md-4">
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="co2" name="co2">
                 <label class="form-check-label" for="co2">CO2:</label>
+                <input class="form-check-input" type="checkbox" id="co2" name="co2">
+                
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="calorie" name="calorie">
                 <label class="form-check-label" for="calorie">Calorie:</label>
+                <input class="form-check-input" type="checkbox" id="calorie" name="calorie">
             </div>
         </div>
     </div>
@@ -76,13 +77,13 @@
 <div class="modal" id="modal" style="display: none;">
     <form id="modifierForm">
         <div class="modal-content">
-            <label for="modifierIngredient">Ingrédient:</label>
+            
             <input type="text" class="form-control" id="modifierIngredient" name="modifierIngredient"><br>
-
-            <label for="modifierQuantite">Quantité:</label>
+            <label for="modifierIngredient">Ingrédient:</label>
+            
             <input type="text" class="form-control" id="modifierQuantite" name="modifierQuantite"><br>
-
-            <label for="modifierUnite" class="form-label">Unité:</label>
+            <label for="modifierQuantite">Quantité:</label>
+            
             <select class="form-select" id="modifierUnite" name="modifierUnite">
                 <option value="grammes">Grammes</option>
                 <option value="millilitres">Millilitres</option>
@@ -90,6 +91,7 @@
                 <option value="cuillères à café">Cuillères à café</option>
                 <option value="nombre">Nombre</option>
             </select>
+            <label for="modifierUnite" class="form-label">Unité:</label>
 
             <input type="submit" class="btn btn-primary" value="Modifier">
         </div>

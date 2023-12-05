@@ -10,14 +10,14 @@ $(document).ready(function() {
         // Création de la structure HTML de l'ingrédient avec les boutons Supprimer et Modifier
         var nouvelIngredient = $('<div class="ingredient flex"><p>' + ingredient + ' ' + quantite + ' ' + unite + '</p></div>');
 
-        var boutonSupprimer = $('<button>Supprimer</button>').click(function() {
+        var boutonSupprimer = $('<button class="btn btn-primary">Supprimer</button>').click(function() {
             // Suppression visuelle de l'ingrédient et suppression de l'élément correspondant dans la liste JavaScript
             var index = $(this).parent().index();
             $(this).parent().remove();
             listeIngredients.splice(index, 1);
         });
 
-        var boutonModifier = $('<button>Modifier</button>').click(function() {
+        var boutonModifier = $('<button class="btn btn-primary">Modifier</button>').click(function() {
             ingredientAModifierIndex = $(this).parent().index(); // Stocke l'index de l'ingrédient à modifier
 
             // Affiche une modale pour modifier l'ingrédient
@@ -44,7 +44,7 @@ $(document).ready(function() {
         $('#liste_mots_cles').empty();
 
         listeMotsCles.forEach(function(motCle) {
-            var nouvelElement = $('<div class="mot-cle"><p>' + motCle + '</p><button class="supprimer">Supprimer</button></div>');
+            var nouvelElement = $('<div class="mot-cle"><p>' + motCle + '</p><button class="supprimer btn btn-primary">Supprimer</button></div>');
 
             nouvelElement.find('.supprimer').click(function() {
                 var index = $(this).parent().index();

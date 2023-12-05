@@ -43,35 +43,15 @@ table {
 	border-spacing: 0;
 }
 
-
-/* perso */
-
+/*********/
+/* PERSO */
+/*********/
 :root {
     --main-background-color: grey;
     --main-text-color: black;
 }
 
-.flex{
-    display: flex;
-    flex-direction: row;
-}
-
-#liste_ingredients, #liste_mots_cles{
-    max-height: 10rem;
-    overflow: auto;
-}
-
-footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 10rem;            /* Footer height */
-    background-color: lime;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-}
-
+/* Style du Header */
 header {
     color :rgb(0, 8, 255);
     background-color: rgb(84, 228, 84);
@@ -81,17 +61,87 @@ header {
     font-size: 25px;
     align-items: center;
     height: 150px;
-
-    
 }
 header h1{
     text-align: center;
     margin: 0 auto;
-    
 }
-
 header img{
     width: 150px;
     margin: 20px;
 } 
 
+/* Style du body */
+.flex{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.form-check-input{
+    margin-top: 0;
+}
+.form-check .form-check-input{
+    margin: 0;
+    float: none;
+}
+.bg-light{
+    background-color: white !important;
+}
+.bg-success{
+    background-color: white !important;
+}
+.s5{
+    width: 50rem;
+}
+.s3{
+    width: 30rem;
+}
+.col-md-3 {
+    text-align: center;
+}
+#liste_ingredients, #liste_mots_cles{
+    max-height: 10rem;
+    overflow: auto;
+}
+#liste_mots_cles{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.mot-cle{
+    display: flex;
+    flex-direction: row;
+    width: 25%;
+    padding: 1rem;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0 1rem;
+}
+.mot-cle p{
+    margin-right: 1rem;
+}
+.form-floating>.form-control-plaintext~label::after, .form-floating>.form-control:focus~label::after, .form-floating>.form-control:not(:placeholder-shown)~label::after, .form-floating>.form-select~label::after {
+    background: none;
+}
+.btn{
+    padding: none;
+}
+
+/* Style du Footer */
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 10rem;/* Footer height */
+    background-color: lime;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
