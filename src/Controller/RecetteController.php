@@ -43,7 +43,7 @@ class RecetteController extends AbstractController
         // Process $data as needed
         $array = $response->toArray();
 
-        return new JsonResponse($array['choices'][0]['message']['content'], 200, [], true);(html_entity_decode($array['choices'][0]['message']['content']));
+        return new JsonResponse($array['choices'][0]['message']['content'], 200, [], true);
     }
 
 }

@@ -1,3 +1,3 @@
 parameters:
-    openai_api_key: 'ajoutez votre clé api chatGPT'
+    openai_api_key: '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'
     openai_api_url: 'https://api.openai.com/v1/chat/completions'

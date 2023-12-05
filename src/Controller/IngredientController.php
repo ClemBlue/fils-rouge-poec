@@ -69,7 +69,9 @@ class IngredientController extends AbstractController
         // Process $data as needed
         $array = $response->toArray();
 
-        return new JsonResponse($array['choices'][0]['message']['content'], 200, [], true);(html_entity_decode($array['choices'][0]['message']['content']));
+        $jsonResponse = new JsonResponse($array['choices'][0]['message']['content'], 200, [], true);(html_entity_decode($array['choices'][0]['message']['content']));
+        $jsonResponse->headers->set('Access-Control-Allow-Origin', 'http://localhost');
+        return $jsonResponse;
     }
     
 }
