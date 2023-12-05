@@ -8,7 +8,7 @@ $(document).ready(function() {
     // Fonction pour ajouter un ingrédient à la liste visuelle et à la liste JavaScript
     function ajouterIngredient(ingredient, quantite, unite) {
         // Création de la structure HTML de l'ingrédient avec les boutons Supprimer et Modifier
-        var nouvelIngredient = $('<div><p>' + ingredient + ' ' + quantite + ' ' + unite + '</p></div>');
+        var nouvelIngredient = $('<div class="ingredient flex"><p>' + ingredient + ' ' + quantite + ' ' + unite + '</p></div>');
 
         var boutonSupprimer = $('<button>Supprimer</button>').click(function() {
             // Suppression visuelle de l'ingrédient et suppression de l'élément correspondant dans la liste JavaScript
