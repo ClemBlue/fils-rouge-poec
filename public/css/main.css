@@ -66,6 +66,30 @@ header img{
     width: 150px;
     margin: 20px;
 } 
+button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: 2px solid #3498db; /* Couleur de la bordure */
+    border-radius: 5px; /* Coins arrondis */
+    color: #3498db; /* Couleur du texte */
+    background-color: #ffffff; /* Couleur de fond */
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    margin-top: 20px;
+    
+}
+
+.contenu-boite-modale h1 {
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-decoration: underline;
+   
+}
 .finCookie{
     text-align: justify;
     margin-bottom: 10px;
@@ -92,6 +116,9 @@ header img{
     padding: 20px;
     text-align: justify;
     margin-bottom: 20px;
+    background-image: url('https://cuisineettradition.com/wp-content/uploads/2020/07/PHILIPPE-ETCHEBEST-e1606153576338.jpg');
+    background-position: center;
+    background-size: cover;
 }
 
 .fermer {
