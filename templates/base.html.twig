@@ -1,15 +1,8 @@
 
-        <!-- Inclus le composant header -->
+
         {% include 'components/header.html.twig' %}
         {% block body %}
         <h1>Je suis le contenu</h1>
-
-        <!-- décommenter les composants avec lesquels vous travailler pour les affichers, il suffit de retirer les # -->
-        {# % include 'components/detailRecette.html.twig' %#}
-        {# % include 'components/ingredientForm.html.twig' %#}
-        {# % include 'components/listRecettes.html.twig' %#}
-        {# % include 'components/search.html.twig' %#}
-
+        {% include 'components/cookies.html.twig'%}
         {% endblock %}
-        <!-- Inclus le composant footer -->
         {% include 'components/footer.html.twig' %}

@@ -1,5 +1,8 @@
         <footer>
             <p>Je suis le footer</p>
         </footer>
+        {% block javascripts %}
+            <script src="{{ asset('js/main.js') }}"></script>
+        {% endblock %}
     </body>
 </html>
