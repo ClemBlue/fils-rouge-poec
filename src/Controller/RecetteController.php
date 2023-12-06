@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-class ApiController extends AbstractController
+class RecetteController extends AbstractController
 {
     private $httpClient;
     private $openaiApiKey;
@@ -22,7 +22,7 @@ class ApiController extends AbstractController
         $this->apiUrl = $parameterBag->get('openai_api_url');
     }
 
-    #[Route('/api', name: 'app_api')]
+    #[Route('/api/recettes', name: 'app_api_recettes')]
     public function callOpenAPI(Request $request): JsonResponse
     {
         // Get the prompt from the request query parameters
@@ -43,6 +43,7 @@ class ApiController extends AbstractController
         // Process $data as needed
         $array = $response->toArray();
 
-        return new JsonResponse($array['choices'][0]['message']['content'], 200, [], true);(html_entity_decode($array['choices'][0]['message']['content']));
+        return new JsonResponse($array['choices'][0]['message']['content'], 200, [], true);
     }
+
 }
