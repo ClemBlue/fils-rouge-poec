@@ -6,3 +6,6 @@ controllers:
 accueil:
     path: /
     controller: App\Controller\FirstController::index
+mentions:
+    path: /mentions
+    controller: App\Controller\MentionsLegalesController::index
