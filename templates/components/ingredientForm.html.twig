@@ -74,26 +74,37 @@
 </form>
 
 <!-- Modal pour la modification -->
-<div class="modal" id="modal" style="display: none;">
-    <form id="modifierForm">
+<div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
-            
-            <input type="text" class="form-control" id="modifierIngredient" name="modifierIngredient"><br>
-            <label for="modifierIngredient">Ingrédient:</label>
-            
-            <input type="text" class="form-control" id="modifierQuantite" name="modifierQuantite"><br>
-            <label for="modifierQuantite">Quantité:</label>
-            
-            <select class="form-select" id="modifierUnite" name="modifierUnite">
-                <option value="grammes">Grammes</option>
-                <option value="millilitres">Millilitres</option>
-                <option value="cuillères à soupe">Cuillères à soupe</option>
-                <option value="cuillères à café">Cuillères à café</option>
-                <option value="nombre">Nombre</option>
-            </select>
-            <label for="modifierUnite" class="form-label">Unité:</label>
-
-            <input type="submit" class="btn btn-primary" value="Modifier">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel">Modifier l'ingrédient</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="modifierForm">
+                    <div class="mb-3">
+                        <label for="modifierIngredient" class="form-label">Ingrédient:</label>
+                        <input type="text" class="form-control" id="modifierIngredient" name="modifierIngredient">
+                    </div>
+                    <div class="mb-3">
+                        <label for="modifierQuantite" class="form-label">Quantité:</label>
+                        <input type="text" class="form-control" id="modifierQuantite" name="modifierQuantite">
+                    </div>
+                    <div class="mb-3">
+                        <label for="modifierUnite" class="form-label">Unité:</label>
+                        <select class="form-select" id="modifierUnite" name="modifierUnite">
+                            <option value="grammes">Grammes</option>
+                            <option value="millilitres">Millilitres</option>
+                            <option value="cuillères à soupe">Cuillères à soupe</option>
+                            <option value="cuillères à café">Cuillères à café</option>
+                            <option value="nombre">Nombre</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Modifier</button>
+                </form>
+            </div>
         </div>
-    </form>
+    </div>
 </div>
+

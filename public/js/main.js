@@ -17,11 +17,11 @@ $(document).ready(function() {
             listeIngredients.splice(index, 1);
         });
 
-        var boutonModifier = $('<button class="btn btn-primary">Modifier</button>').click(function() {
+        var boutonModifier = $('<button class="btn btn-primary" data-toggle="modal" data-target="#modal">Modifier</button>').click(function() {
             ingredientAModifierIndex = $(this).parent().index(); // Stocke l'index de l'ingrédient à modifier
 
             // Affiche une modale pour modifier l'ingrédient
-            $('#modal').show();
+            $('#modal').modal('show');
             $('#modifierIngredient').val(listeIngredients[ingredientAModifierIndex].ingredient);
             $('#modifierQuantite').val(listeIngredients[ingredientAModifierIndex].quantite);
             $('#modifierUnite').val(listeIngredients[ingredientAModifierIndex].unite);
@@ -112,7 +112,15 @@ $(document).ready(function() {
         console.log(formData);
     });
 
-    //Modal pour modifier l'ingrédient
+    $('#btnModifier').on('click', function() {
+        ingredientAModifierIndex = $(this).parent().index();
+        $('#modifierIngredient').val(listeIngredients[ingredientAModifierIndex].ingredient);
+        $('#modifierQuantite').val(listeIngredients[ingredientAModifierIndex].quantite);
+        $('#modifierUnite').val(listeIngredients[ingredientAModifierIndex].unite);
+        $('#modal').modal('show'); // Utilisation de la méthode Bootstrap pour afficher la modale
+    });
+
+    // Gestionnaire d'événement pour la soumission du formulaire de modification
     $('#modifierForm').submit(function(event) {
         event.preventDefault();
         var nouvelIngredient = {
@@ -120,8 +128,8 @@ $(document).ready(function() {
             quantite: $('#modifierQuantite').val(),
             unite: $('#modifierUnite').val()
         };
-        listeIngredients[ingredientAModifierIndex] = nouvelIngredient; // Mise à jour de l'ingrédient dans la liste
-        $('#modal').hide(); // Cache la modale après la modification
-        actualiserListeIngredients(); // Actualise la liste visuelle des ingrédients
+        listeIngredients[ingredientAModifierIndex] = nouvelIngredient;
+        $('#modal').modal('hide'); // Utilisation de la méthode Bootstrap pour cacher la modale après la modification
+        actualiserListeIngredients();
     });
 });
