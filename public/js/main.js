@@ -16,7 +16,7 @@ function fermerBoiteModale () {
 //function isCookiesAccepted() {
    // console.log (document.cookie.indexOf('cookies_accepted=true'));
 //}
-   // if (isCookiesAccepted()) {
+
    // if (isCookiesAccepted()) {
         // Code à exécuter si les cookies sont acceptés
     //    console.log("Les cookies sont acceptés!");
