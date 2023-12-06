@@ -51,6 +51,7 @@ table {
 
 #mentions {
     margin-bottom: 20px;
+    line-height: 1.25;
  }
 #mentions p{
     font-family:'Times New Roman', Times, serif;
