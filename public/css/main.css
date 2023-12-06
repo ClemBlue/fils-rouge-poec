@@ -49,11 +49,14 @@ table {
     --main-text-color: black;
 }
 
- #mentions {
+#mentions {
     margin-bottom: 20px;
  }
+#mentions p{
+    font-family:'Times New Roman', Times, serif;
+}
     
-    h2
+#mentions h2
     {
     text-decoration: underline;
     font-weight: bold;
