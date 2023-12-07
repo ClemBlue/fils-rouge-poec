@@ -2,17 +2,23 @@ security:
     password_hashers:
         App\Entity\User:
             algorithm: auto
-    providers:
-        in_memory:
-            memory:
-                users:    
-                    admin:
-                        password: '$2y$13$DvTDfuX3YiIR4FLKja.EF.mbA8VqH7GH7l91G8E1wG0PjzzAY/iCC'
-                        roles: ['ROLE_ADMIN']
 
+    providers:
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: username
+        # used to reload user from session & other features (e.g. switch_user)
     firewalls:
-        secured_area:
-        anonymous: ~
-        http_basic: ~
+        anonymous:
+            pattern: ^/login$
+        main:
+            provider: app_user_provider
+            form_login:
+                login_path: app_login
+                check_path: app_login
+            logout:
+                path: app_logout
+                target: app_home
     access_control:
-        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/admin/, roles: ROLE_ADMIN }

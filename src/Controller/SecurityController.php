@@ -1,62 +1,39 @@
 <?php
-
 namespace App\Controller;
 
-use PHPUnit\Util\Json;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\User;
+use App\Entity\Parametres;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\Security\Core\Exception\BadCredentialsException;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Security\Core\User\InMemoryUserProvider;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class SecurityController extends AbstractController
 {
+    /**
+     * @Route("/login", name="app_login")
+     */
     
-        private $tokenStorage;
+    public function login(AuthenticationUtils $authenticationUtils)
+    {
+        // Get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
 
-        public function __construct(TokenStorageInterface $tokenStorage)
-        {
-            $this->tokenStorage = $tokenStorage;
-        }
-        /**
-         * @Route("/login", name="app_login", methods={"POST"})
-         */
-        public function login(Request $request, UserPasswordHasherInterface $passwordHasher): JsonResponse
-        {
-            $data = json_decode($request->getContent(), true);
+        // Last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
 
-            $username = $data['username'] ?? null;
-            $password = $data['password'] ?? null;
-
-            if (!$username || !$password) {
-                return new JsonResponse(['error' => 'Invalid credentials'], 400);
-            }
-
-            // Retrieve users directly from security.yaml configuration
-            $token = $this->tokenStorage->getToken();
-            $user = $token->getUser();
-
-    
-            // Verify the provided password against the hashed password from security.yaml
-            $hashedPassword = $user['password'];
-            if (!$passwordHasher->isPasswordValid($hashedPassword, $password, $user[$username])) {
-                throw new BadCredentialsException('Invalid credentials');
-            }
-    
-            return new JsonResponse(['message' => 'Login successful']);
-        }
-    
-        /**
-         * @Route("/logout", name="app_logout")
-         */
-        public function logout(): void
-        {
-            // The logout action will be handled by Symfony's security system
-        }
+        return $this->render('components/login.html.twig', [
+            'last_username' => $lastUsername,
+            'error'         => $error,
+        ]);
     }
+
+    /**
+     * @Route("/logout", name="app_logout")
+     */
+    public function logout()
+    {
+        // Controller will never be executed, as the route will match before
+        throw new \Exception('Don\'t forget to activate logout in security.yaml');
+    }
+}
