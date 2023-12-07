@@ -1,5 +1,7 @@
 {
   "devDependencies": {
+    "@hotwired/stimulus": "^3.0.0",
+    "@symfony/ux-live-component": "file:vendor/symfony/ux-live-component/assets",
     "bootstrap": "^5.3.2"
   }
 }
