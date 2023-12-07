@@ -3,13 +3,20 @@
         {% include 'components/header.html.twig' %}
         {% block body %}
         <div class="content">
-                <h1>Je suis le contenu</h1>
+                <!-- Composant 1 : Formulaire -->
+                <div id="composant1" class="{#composant {% if displayForm %} visible {% else %} hidden {% endif %}#}">
+                        {#% include 'components/ingredientForm.html.twig' %#}
+                </div>
 
-                <!-- décommenter les composants avec lesquels vous travailler pour les affichers, il suffit de retirer les # -->
-                {# % include 'components/detailRecette.html.twig' %#}
-                {% include 'components/ingredientForm.html.twig' %}
-                {# % include 'components/listRecettes.html.twig' %#}
-                {# % include 'components/search.html.twig' %#}
+                <!-- Composant 2 : Liste -->
+                <div id="composant2" class="{#composant {% if displayList %} visible {% else %} hidden {% endif %}#}">
+                        {#% include 'components/listRecettes.html.twig' %#}
+                </div>
+
+                <!-- Composant 3 : Détails -->
+                <div id="composant3" class="{#composant {% if displayDetails %} visible {% else %} hidden {% endif %}#}">
+                        {% include 'components/detailRecette.html.twig' %}
+                </div>
         </div>
 
         {% endblock %}

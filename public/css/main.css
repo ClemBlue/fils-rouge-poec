@@ -59,7 +59,15 @@ body{
 }
 .content {
     flex: 1 0 auto;
-  }
+}
+
+.composant {
+    display: none;
+}
+
+.visible {
+    display: block;
+}
 
 /* Style du Header */
 header {
@@ -142,6 +150,35 @@ form{
 }
 .btn{
     padding: none;
+}
+
+/* Detail Recette */
+.recetteHeader {
+
+}
+.recetteHeader h2 {
+
+}
+.recetteInfo {
+
+}
+.sidebar {
+
+}
+.recetteDetail {
+
+}
+.listIngredient {
+
+}
+.ingredient {
+
+}
+.recetteEtapes {
+
+}
+.etape {
+    
 }
 
 /* Style du Footer */
