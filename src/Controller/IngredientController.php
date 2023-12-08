@@ -40,13 +40,15 @@ class IngredientController extends AbstractController
         $portions = null;
         $motsClesString = "";
 
+        $isCo2 = false;
+        $isCalorie = false;
         foreach ($jsonData as $key => $value) {
             if($key === 'ingredients' && is_array($value)){
                 foreach ($value as $ingredient) {
                     // vérifier si les parametres sont presents
-                    if (!isset($ingredient['label'])|| !isset($ingredient['quantity'])  || !isset($ingredient['unit']))
+                    if (!isset($ingredient['quantity'])  || !isset($ingredient['unit']))
                     {
-                        return new JsonResponse(['error '=> 'Missing requered parametrs'], JsonResponse::HTTP_BAD_REQUEST);
+                        return new JsonResponse(['error '=> 'Missing required parametrs'], JsonResponse::HTTP_BAD_REQUEST);
                     } 
                     //recuperer les parametres
                     $label = $ingredient['label'];
@@ -68,6 +70,9 @@ class IngredientController extends AbstractController
         $ingredientsString = rtrim($ingredientsString, ", ");
         $motClesString = rtrim($motsClesString, ", ");
 
+        $formatJson = "[{nom: nom_recette}, {nom: nom_recette}, {nom: nom_recette}]";
+
+        $content = "donne moi les noms de recettes à partir des ingrédients : " . $ingredientsString . ", des mots clés suivants : " . $motClesString . ", et du nombre de portions : " . $portions . ". Si tu ne peux pas, retourne une liste vide. Respecte le format JSON suivant: " . $formatJson .". Ne retourne que le JSON sans autre détail ou erreur";
         // Replace 'your_openai_api_key' with your actual OpenAI API key
         $response = $this->httpClient->request('POST', $this->apiUrl, [
             'headers' => [
@@ -75,7 +80,7 @@ class IngredientController extends AbstractController
                 'Content-Type' => 'application/json',
             ],
             'json' => [
-                'messages' => array(array("role" => "user", "content" => "donne moi les noms de recettes, la quantité de CO² moyen et le nombre moyen de calorie à partir des ingrédients, des mots clés suivants : " . $motClesString . ", et du nombre de portions : " . $portions . ". Sous la forme JSON, ne retourne que le JSON sans détailler les recettes: " . $ingredientsString)),
+                'messages' => array(array("role" => "user", "content" => $content)),
                 'max_tokens' => 500,
                 'model' => 'gpt-3.5-turbo'
             ],
@@ -83,7 +88,7 @@ class IngredientController extends AbstractController
         // Process $data as needed
         $array = $response->toArray();
 
-        $jsonResponse = new JsonResponse($array['choices'][0]['message']['content'], 200, [], true);(html_entity_decode($array['choices'][0]['message']['content']));
+        $jsonResponse = new JsonResponse($array['choices'][0]['message']['content'], 200, [], true);
         $jsonResponse->headers->set('Access-Control-Allow-Origin', 'http://localhost');
         return $jsonResponse;
     }

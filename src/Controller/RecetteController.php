@@ -27,6 +27,10 @@ class RecetteController extends AbstractController
     {
         // Get the prompt from the request query parameters
         $text = $request->query->get('text', '');
+        $isCalorie = $request->query->get('calories', false);
+        $isCo2 = $request->query->get('co2', false);
+        $coloriesJson = $isCalorie ? ", calories: x" : "";
+        $c02Json = $isCo2 ? ", co2: y tonnes" : "";
 
         // Replace 'your_openai_api_key' with your actual OpenAI API key
         $response = $this->httpClient->request('POST', $this->apiUrl, [
@@ -35,7 +39,7 @@ class RecetteController extends AbstractController
                 'Content-Type' => 'application/json',
             ],
             'json' => [
-                'messages' => array(array("role" => "user", "content" => "donne moi la recette de ".$text." sous forme json {ingredients:[{ingredient: x, qty: y, unit: z}], steps: [a, b, c]}")),
+                'messages' => array(array("role" => "user", "content" => "donne moi la recette de ".$text." sous forme json {ingredients:[{ingredient: x, qty: y, unit: z}], steps: [a, b, c]".$coloriesJson.$c02Json."}")),
                 'max_tokens' => 500,
                 'model' => 'gpt-3.5-turbo'
             ],
