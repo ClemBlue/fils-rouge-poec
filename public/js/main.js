@@ -1,5 +1,43 @@
 /* Votre JavaScript ici */
 
+/* Ingrédient API */
+ // URL de l'API à appeler
+ const apiUrl = 'http://localhost:8000/api/ingredients'; //2 changer url openai
+
+ function reussite ( data ) 
+ {
+    console.log(data);
+     // Traitement des données de la réponse
+     let recipes = data.data.recettes; // 7 recupere la reponse 
+     console.log('recipes');
+     console.log(recipes);
+     let divName = document.getElementById( "titre" );
+     let htmlContent = '<ul>';
+     recipes.forEach(recipe => {
+        let co2Value = null;
+        let caloriesValue = null;
+
+        // Recherche dynamique des valeurs CO2 et calories
+        Object.keys(recipe).forEach(key => {
+            if (key.toLowerCase().includes('co2')) {
+                co2Value = recipe[key];
+            } else if (key.toLowerCase().includes('calories')) {
+                caloriesValue = recipe[key];
+            }
+        });
+
+        htmlContent += `<li>${recipe.nom}: ${recipe.co2Value} - ${recipe.caloriesValue}</li>`;
+     })
+     htmlContent += '</ul>';
+     divName.innerHTML = htmlContent;
+ }
+
+ function echec (error) 
+ {
+     // Gestion des erreurs
+     console.error('Erreur lors de la récupération des données:', error.response);
+ }
+
 /* Fonction pour faire la liste des ingrédients renseignés dans le formulaire d'ingrédient */
 $(document).ready(function() {
     var listeIngredients = [];
@@ -107,9 +145,25 @@ $(document).ready(function() {
             co2: $('#co2').is(':checked'),
             calorie: $('#calorie').is(':checked')
         };
+        const params = {
+            ingredients: formData.ingredient.map(item => {
+                return {
+                    "label": item.ingredient,
+                    "quantity": parseFloat(item.quantite), // Convertir en nombre si nécessaire
+                    "unit": item.unite
+                };
+            }),
+            portions: formData.portions,
+            motscles: formData.mots_cles.map(item => {
+                return {
+                    "nom": item,
+                }
+            })
+        };
+        console.log('params');
+        console.log(params);
 
-        // Affichage des données dans la console
-        console.log(formData);
+        axios.post(apiUrl, params).then(reussite).catch(echec);
     });
 
     $('#btnModifier').on('click', function() {
