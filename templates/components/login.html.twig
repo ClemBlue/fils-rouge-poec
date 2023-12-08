@@ -1,43 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Formulaire de Connexion</title>
-    <!-- Ajoutez le lien vers la bibliothèque Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-</head>
-<body>
-
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">
-                    Connexion
-                </div>
-                <div class="card-body">
-                    <form action="{{ path('app_login') }}" method="post"> <!-- en cliquant sur se connecter on appel app login avec post -->
-                        <div class="form-group">
-                            <label for="username">Nom d'utilisateur :</label>
-                            <input type="text" class="form-control" id="username" name="_username" placeholder="Entrez votre nom d'utilisateur">
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Mot de passe :</label>
-                            <input type="password" class="form-control" id="password" name="_password" placeholder="Entrez votre mot de passe">
-                        </div>
-                        <input type="submit" class="btn btn-primary" value="Se connecter"></button>
-                    </form>
-                </div>
-            </div>
-        </div>
+    <div class="card-header boxX">
+      Connexion
     </div>
-</div>
-
-<!-- Ajoutez le lien vers la bibliothèque Bootstrap JavaScript et la bibliothèque Popper.js (nécessaire pour les fonctionnalités Bootstrap) -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
-</body>
-</html>
+    
+    <form action="{{ path('app_login') }}" method="post">
+      <div class="card-body boxXXX my-form-label">
+      <div class="col-12 bg-light ">
+         <div class="form-group">
+            <label for="username">Nom d'utilisateur :</label>
+            <input type="text" class="form-control" id="username" name="_username" placeholder="Entrez votre nom d'utilisateur">
+         </div>
+        </div>
+        <div class="col-12 bg-light ">
+          <div class="form-group">
+            <label for="password">Mot de passe :</label>
+            <input type="password" class="form-control" id="password" name="_password" placeholder="Entrez votre mot de passe">
+           </div>
+         </div>
+        <button type="submit" class="btn btn-primary">Se connecter</button>
+      </div>
+    </form>
