@@ -3,14 +3,13 @@
         {% include 'components/header.html.twig' %}
         {% block body %}
         <div class="content">
-                <h1>Je suis le contenu</h1>
+                <p class="accroche">Transformez vos simples ingrédients en délices éco-responsables avec Cuisine Écologique du Placard : des recettes savoureuses à portée de placard !</p>
 
                 <!-- décommenter les composants avec lesquels vous travailler pour les affichers, il suffit de retirer les # -->
                 {# % include 'components/detailRecette.html.twig' %#}
                 {% include 'components/ingredientForm.html.twig' %}
                 {# % include 'components/listRecettes.html.twig' %#}
                 {# % include 'components/search.html.twig' %#}
-                {% include 'components/login.html.twig' %}
         </div>
 
         {% endblock %}

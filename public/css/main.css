@@ -47,6 +47,7 @@ table {
 /* PERSO */
 /*********/
 :root {
+    --main-primary-color: rgb(84, 228, 84);
     --main-background-color: grey;
     --main-text-color: black;
 }
@@ -59,12 +60,19 @@ body{
 }
 .content {
     flex: 1 0 auto;
+    margin: 1rem 0;
   }
+
+.accroche{
+    text-align: center;
+    width: 50%;
+    margin: 1rem auto;
+}
 
 /* Style du Header */
 header {
-    color :rgb(0, 8, 255);
-    background-color: rgb(84, 228, 84);
+    color :var(--main-text-color);
+    background-color: var(--main-background-color);
     display: flex;
     flex-direction: row;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
@@ -148,16 +156,20 @@ form{
 footer {
     flex-shrink: 0;
     width: 100%;
-    height: 10rem;/* Footer height */
-    background-color: lime;
+    height: 5rem;/* Footer height */
+    background-color: var(--main-background-color);
     display: flex;
     align-items: center;
     justify-content: space-evenly;
 }
+footer a{
+    color: var(--main-text-color);
+    text-decoration: none;
+}
 
 
 
-
+/* Formulaire Connexion ADMIN */
 .boxXXX {
     display: flex;
     flex-direction: column;
@@ -167,13 +179,17 @@ footer {
     justify-content: space-between;
     height: 180px;
     width: 400px;
-  }
+}
 
-  .boxX {
+.boxX {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100px;
-  }
+}
+.boxX h2{
+    font-size: 2rem;
+    font-weight: bold;
+}
   
  
