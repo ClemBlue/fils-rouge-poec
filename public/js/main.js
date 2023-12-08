@@ -14,19 +14,7 @@
      let divName = document.getElementById( "titre" );
      let htmlContent = '<ul>';
      recipes.forEach(recipe => {
-        let co2Value = null;
-        let caloriesValue = null;
-
-        // Recherche dynamique des valeurs CO2 et calories
-        Object.keys(recipe).forEach(key => {
-            if (key.toLowerCase().includes('co2')) {
-                co2Value = recipe[key];
-            } else if (key.toLowerCase().includes('calories')) {
-                caloriesValue = recipe[key];
-            }
-        });
-
-        htmlContent += `<li>${recipe.nom}: ${recipe.co2Value} - ${recipe.caloriesValue}</li>`;
+        htmlContent += `<li>${recipe.nom}</li>`;
      })
      htmlContent += '</ul>';
      divName.innerHTML = htmlContent;
@@ -142,8 +130,6 @@ $(document).ready(function() {
             ingredient: listeIngredients,
             portions: $('#portions').val(),
             mots_cles: listeMotsCles,
-            co2: $('#co2').is(':checked'),
-            calorie: $('#calorie').is(':checked')
         };
         const params = {
             ingredients: formData.ingredient.map(item => {
