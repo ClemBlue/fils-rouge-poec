@@ -1,0 +1,45 @@
+{# templates/your_template.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+   <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+<style>
+
+    .container li{
+      font-size: 15px;
+      color:red;
+    }
+</style>
+<div class="container mt-5 text text-left">
+  <h2 class="titrecontact">Contactez-nous</h2>
+  {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+    
+    <div class="form-row">
+      <div class="form-group">
+       
+        {{ form_row(form.nom, {'attr': {'class': 'form-group'}}) }}
+      </div>
+    
+
+    <!-- Adresse Email -->
+    <div class="form-group">
+     
+      {{ form_row(form.email, {'attr': {'class': 'form-group'}}) }}
+    </div>
+
+    <!-- Message -->
+    <div class="form-group">
+    
+       {{ form_row(form.message, {'attr': {'class': 'form-group'}}) }}
+    </div>
+
+    <!-- Bouton Envoyer -->
+    <button type="submit" class="btn btn-primary">Envoyer</button>
+   {{ form_end(form) }}
+</div>
+</div>
+
+
+
+{% endblock %}

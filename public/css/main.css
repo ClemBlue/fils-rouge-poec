@@ -101,6 +101,15 @@ header img{
     margin: 20px;
 } 
 
+.titrecontact {
+
+  margin-bottom: 10px;
+    text-align: center;
+    font-size: 30px;
+    text-decoration: underline;
+   
+   }
+
 /* Style du body */
 .flex{
     display: flex;
@@ -166,7 +175,8 @@ form{
 
 /* Style du Footer */
 footer {
-    flex-shrink: 0;
+    margin-top: auto;
+    bottom: 0;
     width: 100%;
     height: 5rem;/* Footer height */
     background-color: var(--main-background-color);
