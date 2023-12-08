@@ -154,3 +154,14 @@ footer {
     align-items: center;
     justify-content: space-evenly;
 }
+
+
+
+
+.boxXXX {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 3%;
+
+  }
