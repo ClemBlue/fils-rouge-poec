@@ -83,6 +83,15 @@ header img{
     margin: 20px;
 } 
 
+.titrecontact {
+
+  margin-bottom: 10px;
+    text-align: center;
+    font-size: 30px;
+    text-decoration: underline;
+   
+   }
+
 /* Style du body */
 .flex{
     display: flex;

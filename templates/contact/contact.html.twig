@@ -2,19 +2,25 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-  
+   <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+<style>
 
-<div class="container mt-5">
-  <h2>Contactez-nous</h2>
+    .container li{
+      font-size: 15px;
+      color:red;
+    }
+</style>
+<div class="container mt-5 text text-left">
+  <h2 class="titrecontact">Contactez-nous</h2>
   {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
 
-    <!-- Nom et Prénom -->
+    
     <div class="form-row">
-      <div class="form-group col-md-6">
+      <div class="form-group">
        
         {{ form_row(form.nom, {'attr': {'class': 'form-group'}}) }}
       </div>
-    </div>
+    
 
     <!-- Adresse Email -->
     <div class="form-group">
@@ -32,5 +38,8 @@
     <button type="submit" class="btn btn-primary">Envoyer</button>
    {{ form_end(form) }}
 </div>
+</div>
+
+
 
 {% endblock %}
