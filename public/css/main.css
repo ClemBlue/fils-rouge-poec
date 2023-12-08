@@ -43,9 +43,7 @@ table {
 	border-spacing: 0;
 }
 
-/*********/
-/* PERSO */
-/*********/
+
 :root {
     --main-primary-color: rgb(84, 228, 84);
     --main-background-color: grey;
@@ -69,7 +67,21 @@ body{
     margin: 1rem auto;
 }
 
-/* Style du Header */
+#mentions {
+    margin-bottom: 20px;
+    line-height: 1.25;
+ }
+#mentions p{
+    font-family:'Times New Roman', Times, serif;
+}
+    
+#mentions h2
+    {
+    text-decoration: underline;
+    font-weight: bold;
+    font-size: 16px;
+}
+
 header {
     color :var(--main-text-color);
     background-color: var(--main-background-color);
