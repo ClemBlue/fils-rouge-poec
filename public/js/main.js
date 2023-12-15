@@ -2,7 +2,6 @@
 function getCookie(cookieName) {
     var name = cookieName + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
-    console.log('>>>>',decodedCookie);
     var cookieArray = decodedCookie.split(';');
 
     for (var i = 0; i < cookieArray.length; i++) {
@@ -18,7 +17,6 @@ function ouvrirBoiteModale () {
     
 
     var boiteModale = document.getElementById('maBoiteModale');
-    //boiteModale.style.display = 'block';
     if (getCookie('tata')!=""){
        
         var boiteModale = document.getElementById('maBoiteModale');
@@ -48,16 +46,6 @@ function setCookie(cookieName, cookieValue, expirationDays) {
 function getCookie(cookieName) {
     var name = cookieName + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
-    console.log('>>>>',decodedCookie);
     return decodedCookie;
 }
-
-// Exemple : Lire la valeur du cookie "monCookie"
-var valeurDuCookie = getCookie("monCookie");
-if (valeurDuCookie) {
-    console.log("La valeur du cookie monCookie est : " + valeurDuCookie);
-} else {
-    console.log("Le cookie monCookie n'existe pas.");
-}
-
 
