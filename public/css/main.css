@@ -228,15 +228,22 @@ form{
 
 }
  
-  
 
    
 .recetteHeader {
-    text-align: center;
+    
     background-color: #f5f5f5;
-    padding: 18px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    
 }
-
+.image-recette{
+    margin-right: 20px;
+    height: 100px;
+    max-width: 100%;
+}
 /* Style pour le titre de la recette */
 .recetteHeader h2 {
     margin: 0;
@@ -253,6 +260,7 @@ form{
 /* Style de la barre latérale contenant les détails de la recette et la liste d'ingrédients */
 .sidebar {
     width: 30%;
+    margin-left: 20px;
 }
 
 /* Style des détails de la recette (calories, CO2, temps de préparation, portion) */
@@ -268,12 +276,16 @@ form{
 .listIngredient {
     list-style: none;
     padding: 0;
+   
 }
 
 /* Style des éléments de la liste d'ingrédients */
 .ingredient {
     border-bottom: 1px solid #ccc;
     padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
 }
 
 /* Style des étapes de la recette */
@@ -294,7 +306,8 @@ form{
 
 /* Style des étapes individuelles de la recette */
 .etape p {
-    margin: 0;
+    margin: 20px;
+    text-align: justify;
 }
 
 .styleA {
@@ -327,9 +340,6 @@ menu1 {
 
 
 
-.etape {
-    
-}
 
 /* Style du Footer */
 footer {
