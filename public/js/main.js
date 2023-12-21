@@ -1,33 +1,53 @@
 /* Votre JavaScript ici */
 
 /* Ingrédient API */
- // URL de l'API à appeler
- const apiUrl = 'http://localhost:8000/api/ingredients'; //2 changer url openai
+// URL de l'API à appeler
+const apiUrl = 'http://localhost:8000/api/ingredients'; //2 changer url openai
 
- function reussite ( data ) 
- {
+function reussite ( data ) 
+{
     console.log(data);
      // Traitement des données de la réponse
-     let recipes = data.data.recettes; // 7 recupere la reponse 
-     console.log('recipes');
-     console.log(recipes);
-     let divName = document.getElementById( "titre" );
-     let htmlContent = '<ul>';
-     recipes.forEach(recipe => {
-        htmlContent += `<li>${recipe.nom}</li>`;
-     })
-     htmlContent += '</ul>';
-     divName.innerHTML = htmlContent;
- }
+    let recipes = data.data.recettes; // 7 recupere la reponse 
+    console.log('recipes');
+    console.log(recipes);
+    let divName = document.getElementById( "listRecette" );
+    let htmlContent = '';
+    recipes.forEach(recipe => {
+    htmlContent += `<div class="card" style="width: 15rem;">
+    <img src="https://img.cuisineaz.com/1024x768/2013/12/20/i18391-poule-au-pot-et-riz-long.jpeg"
+        class="imgA" alt="poule au pot l'ancienne">
+    <div class="card-body">
+        <h5 class="card-title titre">${recipe.nom}</h5>
+        <p class="card-text">calorie</p>
+        <p class="card-text">CO2</p>
+        <a href="" class="btn btn-primary"> Allez à la recherche </a>
+    </div>
+    </div>`;
+    })
+    divName.innerHTML = htmlContent;
+    $('#formIngredient').hide();
+    $('#listRecette').show();
+    $('#modifierFormBtn').show();
+}
 
- function echec (error) 
- {
-     // Gestion des erreurs
-     console.error('Erreur lors de la récupération des données:', error.response);
- }
+function echec (error) 
+{
+    // Gestion des erreurs
+    console.error('Erreur lors de la récupération des données:', error.response);
+}
+
+$(document).on('click', '#modifierFormBtn', function() {
+    $('#formIngredient').show();
+    $('#listRecette').hide();
+    $(this).hide();
+});
 
 /* Fonction pour faire la liste des ingrédients renseignés dans le formulaire d'ingrédient */
 $(document).ready(function() {
+
+    $('#listRecette').hide();
+
     var listeIngredients = [];
     var listeMotsCles = [];
 
