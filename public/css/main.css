@@ -55,8 +55,20 @@ html, body{
 
 .content {
     flex: 1 0 auto;
+<<<<<<< HEAD
     margin: 1rem 0;
   }
+=======
+}
+
+.composant {
+    display: none;
+}
+
+.visible {
+    display: block;
+}
+>>>>>>> detailRecette
 
 .accroche{
     text-align: center;
@@ -172,6 +184,35 @@ form{
 #modifierFormBtn{
     display: block;
     margin: 0 auto;
+}
+
+/* Detail Recette */
+.recetteHeader {
+
+}
+.recetteHeader h2 {
+
+}
+.recetteInfo {
+
+}
+.sidebar {
+
+}
+.recetteDetail {
+
+}
+.listIngredient {
+
+}
+.ingredient {
+
+}
+.recetteEtapes {
+
+}
+.etape {
+    
 }
 
 /* Style du Footer */

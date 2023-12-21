@@ -1,5 +1,6 @@
 /* Votre JavaScript ici */
 
+<<<<<<< HEAD
 /* Ingrédient API */
 // URL de l'API à appeler
 const apiUrl = 'http://localhost:8000/api/ingredients'; //2 changer url openai
@@ -42,6 +43,19 @@ $(document).on('click', '#modifierFormBtn', function() {
     $('#listRecette').hide();
     $(this).hide();
 });
+=======
+
+
+// Récupération des éléments HTML
+const composant1 = document.getElementById('composant1');
+const composant2 = document.getElementById('composant2');
+const composant3 = document.getElementById('composant3');
+
+/**
+ * Partie pour le formulaire ingrédient
+ * 
+ */
+>>>>>>> detailRecette
 
 /* Fonction pour faire la liste des ingrédients renseignés dans le formulaire d'ingrédient */
 $(document).ready(function() {
@@ -193,3 +207,17 @@ $(document).ready(function() {
         actualiserListeIngredients();
     });
 });
+
+
+/**
+ * Partie pour la liste des recettes
+ */
+
+
+
+
+
+
+/**
+ * Partie pour le détail des recettes
+ */
