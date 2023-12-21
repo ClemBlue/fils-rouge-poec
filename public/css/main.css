@@ -168,7 +168,7 @@ form{
     align-items: center;
     margin: 0 1rem;
 }
-.mot-cle p{
+.mot-clep{
     margin-right: 1rem;
 }
 .form-floating>.form-control-plaintext~label::after, .form-floating>.form-control:focus~label::after, .form-floating>.form-control:not(:placeholder-shown)~label::after, .form-floating>.form-select~label::after {
@@ -181,8 +181,28 @@ form{
     display: block;
     margin: 0 auto;
 }
+.etape {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
 
-/* Detail Recette */
+/* Style pour le numéro d'étape */
+.etape h3 {
+    font-weight: bold;
+    MARGIN: auto 10px;
+    text-wrap: nowrap;
+}
+
+/* Style pour le texte d'étape */
+.etape p {
+    text-align: center;
+
+}
+
+
+
+
 .recetteHeader {
 
 }
@@ -195,18 +215,118 @@ form{
 .sidebar {
 
 }
-.recetteDetail {
+.recetteDetail 
 
-}
+
+
+
+
 .listIngredient {
 
 }
 .ingredient {
 
 }
-.recetteEtapes {
+ 
+  
 
+   
+.recetteHeader {
+    text-align: center;
+    background-color: #f5f5f5;
+    padding: 18px;
 }
+
+/* Style pour le titre de la recette */
+.recetteHeader h2 {
+    margin: 0;
+    color: #333;
+}
+
+
+.recetteInfo {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+/* Style de la barre latérale contenant les détails de la recette et la liste d'ingrédients */
+.sidebar {
+    width: 30%;
+}
+
+/* Style des détails de la recette (calories, CO2, temps de préparation, portion) */
+.recetteDetail { 
+    display: flex;
+    flex-direction: column;
+}
+.recetteDetail p {
+    margin: 5px ;
+}
+
+/* Style de la liste d'ingrédients */
+.listIngredient {
+    list-style: none;
+    padding: 0;
+}
+
+/* Style des éléments de la liste d'ingrédients */
+.ingredient {
+    border-bottom: 1px solid #ccc;
+    padding: 10px;
+}
+
+/* Style des étapes de la recette */
+.recetteEtapes {
+    width: 65%;
+    list-style: none;
+    padding: 0;
+    
+}
+
+/* Style des étapes individuelles de la recette */
+.etape {
+    border-bottom: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+    float : right;
+}
+
+/* Style des étapes individuelles de la recette */
+.etape p {
+    margin: 0;
+}
+
+.styleA {
+    display: flex;
+    flex-direction: row;
+}
+
+.container {
+    width: 900px;
+    margin: 0 auto;
+}
+
+menu1 {
+    float: left;
+    width: 128px;
+    border: 1px solid #000;
+    padding: 10px;
+}
+#content {
+    border: 1px solid #000;
+    margin: 0 10px;
+    padding: 10px;
+    width: 558px;
+    float: left;
+}
+#footer {
+    margin-top: 20px;
+    clear: both;
+}
+
+
+
 .etape {
     
 }
