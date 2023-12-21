@@ -55,7 +55,7 @@ html, body{
 
 .content {
     flex: 1 0 auto;
-    margin: 1rem 0;
+    margin: 1rem 5rem ;
 }
 
 .composant {
@@ -260,7 +260,6 @@ form{
 /* Style de la barre latérale contenant les détails de la recette et la liste d'ingrédients */
 .sidebar {
     width: 30%;
-    margin-left: 20px;
 }
 
 /* Style des détails de la recette (calories, CO2, temps de préparation, portion) */
