@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\ParametersRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -12,18 +13,17 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 class RecetteController extends AbstractController
 {
     private $httpClient;
-    private $openaiApiKey;
+
     private $apiUrl;
 
     public function __construct(HttpClientInterface $httpClient, ParameterBagInterface $parameterBag)
     {
         $this->httpClient = $httpClient;
-        $this->openaiApiKey = $parameterBag->get('openai_api_key');
         $this->apiUrl = $parameterBag->get('openai_api_url');
     }
 
     #[Route('/api/recettes', name: 'app_api_recettes')]
-    public function callOpenAPI(Request $request): JsonResponse
+    public function callOpenAPI(Request $request, ParametersRepository $repository): JsonResponse
     {
         // Get the prompt from the request query parameters
         $text = $request->query->get('text', '');
@@ -31,11 +31,16 @@ class RecetteController extends AbstractController
         $isCo2 = $request->query->get('co2', false);
         $coloriesJson = $isCalorie ? ", calories: x" : "";
         $c02Json = $isCo2 ? ", co2: y tonnes" : "";
+        $parameter = $repository->findOneByName("openai_api_key");
+
+        if (!$parameter) {
+            throw $this->createNotFoundException('Parameter not found');
+        }
 
         // Replace 'your_openai_api_key' with your actual OpenAI API key
         $response = $this->httpClient->request('POST', $this->apiUrl, [
             'headers' => [
-                'Authorization' => 'Bearer ' . $this->openaiApiKey,
+                'Authorization' => 'Bearer ' . $parameter->getValue(),
                 'Content-Type' => 'application/json',
             ],
             'json' => [

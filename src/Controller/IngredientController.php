@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\ParametersRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -12,24 +13,27 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 class IngredientController extends AbstractController
 {
     private $httpClient;
-    private $openaiApiKey;
     private $apiUrl;
 
     public function __construct(HttpClientInterface $httpClient, ParameterBagInterface $parameterBag)
     {
         $this->httpClient = $httpClient;
-        $this->openaiApiKey = $parameterBag->get('openai_api_key');
         $this->apiUrl = $parameterBag->get('openai_api_url');
     }
 
     #[Route('/api/ingredients', name: 'app_api_ingredients')]
-    public function callOpenAPI(Request $request): JsonResponse
-    {
+    public function callOpenAPI(Request $request , ParametersRepository $repository): JsonResponse
+    { 
+        $parameter = $repository->findOneByName("openai_api_key");
         // recuperer le contenu json de la requette 
         $content=$request->getContent();
         // decoder le json 
         $jsonData=json_decode($content, true);
+        if (!$parameter) {
+            throw $this->createNotFoundException('Parameter not found');
+        }
         // verifier si le json est correctement décoder
+
         if($jsonData===null)
         {
             return new JsonResponse(['error '=> 'invalide json'], JsonResponse::HTTP_BAD_REQUEST);
@@ -71,7 +75,7 @@ class IngredientController extends AbstractController
         // Replace 'your_openai_api_key' with your actual OpenAI API key
         $response = $this->httpClient->request('POST', $this->apiUrl, [
             'headers' => [
-                'Authorization' => 'Bearer ' . $this->openaiApiKey,
+                'Authorization' => 'Bearer ' . $parameter->getValue(),
                 'Content-Type' => 'application/json',
             ],
             'json' => [

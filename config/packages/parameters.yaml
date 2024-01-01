@@ -1,3 +1,2 @@
 parameters:
-    openai_api_key: 'YOUR API KEY'
     openai_api_url: 'https://api.openai.com/v1/chat/completions'
