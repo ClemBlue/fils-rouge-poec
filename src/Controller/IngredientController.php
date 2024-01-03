@@ -26,14 +26,12 @@ class IngredientController extends AbstractController
     public function callOpenAPI(Request $request): JsonResponse
     {
         // recuperer le contenu json de la requette 
-        $content=$request->getContent();
+        $content = $request->getContent();
         // decoder le json 
-        $jsonData=json_decode($content, true);
+        $jsonData = json_decode($content, true);
         // verifier si le json est correctement décoder
-        if($jsonData===null)
-        {
-            return new JsonResponse(['error '=> 'invalide json'], JsonResponse::HTTP_BAD_REQUEST);
-
+        if ($jsonData === null) {
+            return new JsonResponse(['error ' => 'invalide json'], JsonResponse::HTTP_BAD_REQUEST);
         }
 
         $ingredientsString = "";
@@ -41,23 +39,22 @@ class IngredientController extends AbstractController
         $motsClesString = "";
 
         foreach ($jsonData as $key => $value) {
-            if($key === 'ingredients' && is_array($value)){
+            if ($key === 'ingredients' && is_array($value)) {
                 foreach ($value as $ingredient) {
                     // vérifier si les parametres sont presents
-                    if (!isset($ingredient['label'])|| !isset($ingredient['quantity'])  || !isset($ingredient['unit']))
-                    {
-                        return new JsonResponse(['error '=> 'Missing requered parametrs'], JsonResponse::HTTP_BAD_REQUEST);
-                    } 
+                    if (!isset($ingredient['label']) || !isset($ingredient['quantity'])  || !isset($ingredient['unit'])) {
+                        return new JsonResponse(['error ' => 'Missing requered parametrs'], JsonResponse::HTTP_BAD_REQUEST);
+                    }
                     //recuperer les parametres
                     $label = $ingredient['label'];
-                    $quantity= $ingredient['quantity'];
-                    $unit= $ingredient['unit'];
-                    $ingredientsString .= $label . " " . $quantity . " " . $unit. ", ";
+                    $quantity = $ingredient['quantity'];
+                    $unit = $ingredient['unit'];
+                    $ingredientsString .= $label . " " . $quantity . " " . $unit . ", ";
                 }
             } elseif ($key === 'portions') {
                 $portions = $value;
             } elseif ($key === 'motscles' && is_array($value)) {
-                foreach($value as $motCle){
+                foreach ($value as $motCle) {
                     if (!isset($motCle['nom'])) {
                         return new JsonResponse(['error ' => 'Missing required parameters'], JsonResponse::HTTP_BAD_REQUEST);
                     }
@@ -83,9 +80,9 @@ class IngredientController extends AbstractController
         // Process $data as needed
         $array = $response->toArray();
 
-        $jsonResponse = new JsonResponse($array['choices'][0]['message']['content'], 200, [], true);(html_entity_decode($array['choices'][0]['message']['content']));
+        $jsonResponse = new JsonResponse($array['choices'][0]['message']['content'], 200, [], true);
+        (html_entity_decode($array['choices'][0]['message']['content']));
         $jsonResponse->headers->set('Access-Control-Allow-Origin', 'http://localhost');
         return $jsonResponse;
     }
-    
 }

@@ -13,7 +13,7 @@
         <div class="col-md-3 form-floating">
             <select class="form-select" id="unite" name="unite">
                 <option value="grammes">Grammes</option>
-                <option value="millilitres">Millilitres</option>
+                <option value="centilitres">Centilitres</option>
                 <option value="cuillères à soupe">Cuillères à soupe</option>
                 <option value="cuillères à café">Cuillères à café</option>
                 <option value="nombre">Nombre</option>
@@ -59,6 +59,37 @@
     <div class="text-center">
         <button type="submit" class="btn btn-primary">Envoyer</button>
     </div>
+    
+    <div id="checklist">
+        <div class="colonne1">
+        <label for="farine">Farine :</label>
+        <input type="checkbox" id="farine" name="farine" value="1">
+        <label for="oeufs">Oeufs :</label>
+        <input type="checkbox" id="oeufs" name="oeufs" value="1">
+        <label for="lait">Lait :</label>
+        <input type="checkbox" id="lait" name="lait" value="1">
+        <label for="riz">Riz :</label>
+        <input type="checkbox" id="riz" name="riz" value="1">
+        <label for="pâtes">Pâtes :</label>
+        <input type="checkbox" id="pâtes" name="pâtes" value="1">
+            </div>
+        <div class="colonne2">
+        <label for="pomme de terre">Pomme de terre :</label>
+        <input type="checkbox" id="pomme de terre" name="pomme de terre" value="1">
+        <label for="chocolat">Chocolat :</label>
+        <input type="checkbox" id="chocolat" name="chocolat" value="1">
+        <label for="tomates">Tomates :</label>
+        <input type="checkbox" id="tomates" name="tomates" value="1">
+        <label for="oignons">Oignons :</label>
+        <input type="checkbox" id="oignons" name="oignons" value="1">
+        <label for="pommes">Pommes :</label>
+        <input type="checkbox" id="pommes" name="pommes" value="1">
+        <button id= "addcheckbox" type="button" class="btn btn-success">Ajouter</button>
+            </div>
+        </div>
+    
+     
+
 </form>
 
 <!-- Modal pour la modification -->
@@ -83,7 +114,7 @@
                         <label for="modifierUnite" class="form-label">Unité:</label>
                         <select class="form-select" id="modifierUnite" name="modifierUnite">
                             <option value="grammes">Grammes</option>
-                            <option value="millilitres">Millilitres</option>
+                            <option value="centilitres">Centilitres</option>
                             <option value="cuillères à soupe">Cuillères à soupe</option>
                             <option value="cuillères à café">Cuillères à café</option>
                             <option value="nombre">Nombre</option>
@@ -95,6 +126,4 @@
         </div>
     </div>
 </div>
-
-
 

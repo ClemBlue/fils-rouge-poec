@@ -140,6 +140,26 @@ $(document).ready(function() {
             alert('Veuillez remplir tous les champs.');
         }
     });
+    $('#addcheckbox').on('click', function() {
+        // Récupérer le formulaire
+        var form = document.getElementById('checklist');
+
+        // Récupérer toutes les cases à cocher dans le formulaire
+        var checkboxes = form.querySelectorAll('input[type="checkbox"]');
+
+        // Boucler à travers les cases à cocher et vérifier leur état
+        checkboxes.forEach(function(checkbox) {
+            var ingredientName = checkbox.name;
+            var isChecked = checkbox.checked;
+
+            // Vérifier si la case à cocher est cochée avec une valeur de 1
+            if (isChecked && checkbox.value === '1') {
+                console.log(ingredientName + ' présente');
+            } else {
+                console.log(ingredientName + ' absent');
+            }
+        });
+    });
 
     // Gestionnaire d'événement pour la soumission du formulaire
     $('#formIngredient').submit(function(event) {

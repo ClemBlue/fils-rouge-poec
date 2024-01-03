@@ -1,0 +1,30 @@
+<?php
+
+namespace App\Form;
+
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+class FormType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $checkboxNames = ['farine_1', 'farine_2', 'farine_3', 'farine_4', 'farine_5', 'farine_6', 'farine_7', 'farine_8', 'farine_9', 'farine_10'];
+
+        foreach ($checkboxNames as $name) {
+            $builder->add($name, CheckboxType::class, [
+                'label' => ucfirst($name), // Utilisez ucfirst() pour mettre en majuscule la première lettre
+                'required' => false, // Mettez à true si la case à cocher est obligatoire
+            ]);
+        }
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            // Configurez ici les options du formulaire
+        ]);
+    }
+}

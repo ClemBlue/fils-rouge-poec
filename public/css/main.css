@@ -221,15 +221,29 @@ form{
 
 
 
-.listIngredient {
-
+#ListIngredient {
+    
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
+    }
+.checklist{
+    display: flex;
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
-.ingredient {
+
+
+.colonne1,.colonne2{
+   
+    display: flex;
+    flex-direction: column;
+    margin-right: 100px;
+
 
 }
  
-
-   
 .recetteHeader {
     
     background-color: #f5f5f5;
