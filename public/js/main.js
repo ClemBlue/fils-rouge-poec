@@ -155,6 +155,8 @@ $(document).ready(function() {
             // Vérifier si la case à cocher est cochée avec une valeur de 1
             if (isChecked && checkbox.value === '1') {
                 console.log(ingredientName + ' présente');
+                
+
             } else {
                 console.log(ingredientName + ' absent');
             }
