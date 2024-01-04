@@ -14,13 +14,13 @@ function reussite ( data )
     let divName = document.getElementById( "listRecette" );
     let htmlContent = '';
     recipes.forEach(recipe => {
-    htmlContent += `<div class="card" style="width: 15rem;">
+    htmlContent += `<div class="card" style="width: 15rem; margin-bottom: 1rem;">
     <img src="https://img.cuisineaz.com/1024x768/2013/12/20/i18391-poule-au-pot-et-riz-long.jpeg"
         class="imgA" alt="poule au pot l'ancienne">
     <div class="card-body">
         <h5 class="card-title titre">${recipe.nom}</h5>
         
-        <a href="" class="btn btn-primary"> voir la recette </a>
+        <a href="" class="btn btn-primary"> Voir recette </a>
     </div>
     </div>`;
     })
