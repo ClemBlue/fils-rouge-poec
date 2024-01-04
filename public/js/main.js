@@ -419,7 +419,6 @@ $(document).ready(function() {
             };
             console.log('params');
             console.log(params);
-            
             axios.post(apiUrl, params).then(reussite).catch(echec);
         }
     });
