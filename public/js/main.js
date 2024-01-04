@@ -35,6 +35,7 @@ function reussite ( data )
         $('#formIngredient').hide();
         $('#listRecette').show();
         $('#modifierFormBtn').show();
+        $('#loader').hide();
     } else {
         // Afficher un message d'erreur
         let divName = document.getElementById( "listRecette" );
@@ -42,6 +43,7 @@ function reussite ( data )
         $('#formIngredient').hide();
         $('#listRecette').show();
         $('#modifierFormBtn').show();
+        $('#loader').hide();
     }
 }
 
@@ -49,6 +51,7 @@ function echec (error)
 {
     // Gestion des erreurs
     console.error('Erreur lors de la récupération des données:', error.response);
+    $('#loader').hide();
 }
 
 $(document).on('click', '.details', function() {
@@ -157,6 +160,7 @@ function successDetails(data) {
     $('#detailRecette').show();
     $('#voirListeRecettes').show();
     $('#modifierFormBtn').hide();
+    $('#loader').hide();
 }
 
 // Ajouter un gestionnaire d'événements au bouton "Voir la liste des recettes"
@@ -171,6 +175,7 @@ function errorDetails (error)
 {
     // Gestion des erreurs
     console.error('Erreur lors de la récupération des détails de la recette:', error.response);
+    $('#loader').hide();
 }
 
 
@@ -306,7 +311,7 @@ $(document).ready(function() {
         };
         console.log('params');
         console.log(params);
-
+        $('#loader').show();
         axios.post(apiUrl, params).then(reussite).catch(echec);
     });
 

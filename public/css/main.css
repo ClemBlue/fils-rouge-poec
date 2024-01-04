@@ -379,7 +379,12 @@ footer a{
     text-align: center;
     font-weight:bold;
 }
-
+#loader {
+    background: url('../images/chef.gif');
+    width: 150px;
+    height: 150px;
+    background-size: cover;
+}
 
 
 
