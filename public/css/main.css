@@ -176,7 +176,13 @@ form{
 }
 .btn{
     padding: none;
+    text-align: center;
+    display: grid;
+    margin-left: auto;
+    margin-right: auto;
 }
+
+
 #modifierFormBtn{
     display: block;
     margin: 0 auto;

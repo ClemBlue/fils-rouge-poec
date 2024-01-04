@@ -19,9 +19,8 @@ function reussite ( data )
         class="imgA" alt="poule au pot l'ancienne">
     <div class="card-body">
         <h5 class="card-title titre">${recipe.nom}</h5>
-        <p class="card-text">calorie</p>
-        <p class="card-text">CO2</p>
-        <a href="" class="btn btn-primary"> Allez à la recherche </a>
+        
+        <a href="" class="btn btn-primary"> voir la recette </a>
     </div>
     </div>`;
     })
