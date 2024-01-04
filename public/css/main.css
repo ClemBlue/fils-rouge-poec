@@ -45,12 +45,13 @@ table {
 
 
 :root {
-    --main-primary-color: rgb(84, 228, 84);
-    --main-background-color: grey;
-    --main-text-color: black;
+    --main-primary-color: #f44831;
+    --main-background-color: #fdf4e7;
+    --main-text-color: #1e1e1e;
 }
 html, body{
     height: 100%;
+    background-color: var(--main-background-color);
 }
 
 .content {
@@ -80,8 +81,7 @@ html, body{
     font-family:'Times New Roman', Times, serif;
 }
     
-#mentions h2
-    {
+#mentions h2 {
     text-decoration: underline;
     font-weight: bold;
     font-size: 16px;
@@ -100,6 +100,7 @@ header {
 header h1{
     text-align: center;
     margin: 0 auto;
+    color: var(--main-primary-color);
 }
 header img{
     width: 150px;
@@ -107,13 +108,11 @@ header img{
 } 
 
 .titrecontact {
-
-  margin-bottom: 10px;
+    margin-bottom: 10px;
     text-align: center;
     font-size: 30px;
     text-decoration: underline;
-   
-   }
+}
 
 /* Style du body */
 .flex{
@@ -135,10 +134,14 @@ form{
     float: none;
 }
 .bg-light{
-    background-color: white !important;
+    background-color: var(--main-background-color) !important;
 }
 .bg-success{
-    background-color: white !important;
+    background-color: var(--main-background-color) !important;
+}
+.btn-primary {
+    background-color: var(--main-primary-color) !important;
+    border-color: var(--main-primary-color) !important;
 }
 .s5{
     width: 50rem;
@@ -205,40 +208,10 @@ form{
     text-align: center;
 
 }
-
-
-
-
-.recetteHeader {
-
-}
-.recetteHeader h2 {
-
-}
-.recetteInfo {
-
-}
-.sidebar {
-
-}
-.recetteDetail 
-
-
-
-
-
-.listIngredient {
-
-}
-.ingredient {
-
-}
- 
-
    
 .recetteHeader {
     
-    background-color: #f5f5f5;
+    background-color: var(--main-background-color);
     justify-content: center;
     display: flex;
     align-items: center;
@@ -253,7 +226,7 @@ form{
 /* Style pour le titre de la recette */
 .recetteHeader h2 {
     margin: 0;
-    color: #333;
+    color: var(--main-text-color);
 }
 
 
@@ -412,7 +385,12 @@ footer a{
     text-align: center;
     font-weight:bold;
 }
-
+#loader {
+    background: url('../images/chef.gif');
+    width: 150px;
+    height: 150px;
+    background-size: cover;
+}
 
 
 

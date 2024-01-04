@@ -2,10 +2,14 @@
 
 /* Ingrédient API */
 // URL de l'API à appeler
-const apiUrl = 'http://localhost:8000/api/ingredients'; //2 changer url openai
+const apiUrl = 'http://localhost:8000/api/ingredients';
+const apiDetailUrl = 'http://localhost:8000/api/recettes'
 
+
+/* Traitement du formulaire INGREDIENT */
 function reussite ( data ) 
 {
+<<<<<<< HEAD
     console.log(data);
      // Traitement des données de la réponse
     let recipes = data.data.recettes; // 7 recupere la reponse 
@@ -28,13 +32,178 @@ function reussite ( data )
     $('#formIngredient').hide();
     $('#listRecette').show();
     $('#modifierFormBtn').show();
+=======
+    if (data.data.includes("1. ")) {
+        // Traitement des données pour extraire les noms de recettes
+        let listStart = data.data.indexOf("1. ");
+        let listEnd = data.data.indexOf("\n\n", listStart);
+        let list = data.data.slice(listStart, listEnd);
+        let recipes = list.split("\n").map(recipe => recipe.replace(/(\w+\.\s|- )/, '').replace(/[^a-zA-Z\sœŒÉÈÊËÀÂÄÔÖÙÛÜÇ'éèêëàâäôöùûüç]/g, ''));
+        console.log('recipes');
+        console.log(recipes);
+        let divName = document.getElementById( "listRecette" );
+        let htmlContent = '';
+        recipes.forEach(recipe => {
+            htmlContent += `<div class="card" style="width: 15rem;">
+                <img src="https://img.cuisineaz.com/1024x768/2013/12/20/i18391-poule-au-pot-et-riz-long.jpeg"
+                    class="imgA" alt="poule au pot l'ancienne">
+                <div class="card-body">
+                    <h5 class="card-title titre">${recipe}</h5>
+                    <p class="card-text">calorie</p>
+                    <p class="card-text">CO2</p>
+                    <button class="btn btn-primary details"> Voir recette </button>
+                </div>
+            </div>`;
+        })
+        divName.innerHTML = htmlContent;
+        $('#formIngredient').hide();
+        $('#listRecette').show();
+        $('#modifierFormBtn').show();
+        $('#loader').hide();
+    } else {
+        // Afficher un message d'erreur
+        let divName = document.getElementById( "listRecette" );
+        divName.innerHTML = "Aucune recette trouvée";
+        $('#formIngredient').hide();
+        $('#listRecette').show();
+        $('#modifierFormBtn').show();
+        $('#loader').hide();
+    }
+>>>>>>> 6dc41856fb5bcaf11c70fa929e96e19aea9d8b35
 }
 
 function echec (error) 
 {
     // Gestion des erreurs
     console.error('Erreur lors de la récupération des données:', error.response);
+    $('#loader').hide();
 }
+
+$(document).on('click', '.details', function() {
+    const parameters = {
+        text: $(this).siblings('.card-title.titre').text()
+    };
+    console.log('parameters');
+    console.log(parameters);
+    axios.get(apiDetailUrl + '?text=' + parameters.text).then((data) => {
+        successDetails.call(this, data); // Utiliser une fonction fléchée pour conserver la portée de "this"
+    }).catch(errorDetails);
+    
+});
+
+function successDetails(data) {
+    const recipeName = $(this).siblings('.card-title.titre').text();
+    console.log('Nom de la recette:');
+    console.log(recipeName);
+    const recipeText = data.data;
+
+    // Extraction des ingrédients
+    const ingredientsRegex = /Ingrédients :([\s\S]*?)(?=Étapes de préparation|Préparation|Portion|Temps de préparation|Calories|CO2 moyen|$)/;
+    const ingredientsMatch = recipeText.match(ingredientsRegex);
+    const ingredients = ingredientsMatch ? ingredientsMatch[1].trim() : '';
+
+    // Extraction des étapes de préparation
+    const preparationRegex = /(?:Étapes de préparation|Préparation) :([\s\S]*?)(?=Portion|Temps de préparation|Calories|CO2 moyen|$)/;
+    const preparationMatch = recipeText.match(preparationRegex);
+    const preparations = preparationMatch ? preparationMatch[1].trim() : '';
+
+    // Extraction de la portion
+    const portionRegex = /Portion :([\s\S]*?)(?=Temps de préparation|Calories|CO2 moyen|$)/;
+    const portionMatch = recipeText.match(portionRegex);
+    const portion = portionMatch ? portionMatch[1].trim() : '';
+
+    // Extraction du temps de préparation
+    const preparationTimeRegex = /Temps de préparation :([\s\S]*?)(?=Calories|CO2 moyen|$)/;
+    const preparationTimeMatch = recipeText.match(preparationTimeRegex);
+    const preparationTime = preparationTimeMatch ? preparationTimeMatch[1].trim() : '';
+
+    // Extraction des calories
+    const caloriesRegex = /Calories :([\s\S]*?)(?=CO2 moyen|$)/;
+    const caloriesMatch = recipeText.match(caloriesRegex);
+    const calories = caloriesMatch ? caloriesMatch[1].trim() : '';
+
+    // Extraction du CO2 moyen
+    const co2Regex = /CO2 moyen :([\s\S]*?)(?=Bon appétit|\n|$)/;
+    const co2Match = recipeText.match(co2Regex);
+    const co2 = co2Match ? co2Match[1].trim() : '';
+
+    // Affichage des résultats
+    console.log('Ingrédients:');
+    console.log(ingredients);
+    console.log('Étapes de préparation:');
+    console.log(preparations);
+    console.log('Portion:');
+    console.log(portion);
+    console.log('Temps de préparation:');
+    console.log(preparationTime);
+    console.log('Calories:');
+    console.log(calories);
+    console.log('CO2 moyen:');
+    console.log(co2);
+
+    let detailName = document.getElementById("detailRecette");
+    let contentHtml = '';
+    contentHtml += `<div class="content">
+        <div class="recetteHeader">
+            <img class="image-recette" src="https://img.cuisineaz.com/660x660/2015/10/01/i38134-tarte-fine-poire-et-roquefort.webp" alt="Image de la recette">
+            <h2>${recipeName}</h2>
+        </div>
+
+        <div class="recetteInfo">
+            <div class="sidebar">
+                <div class="recetteDetail">
+                    <div class="styleA">
+                        <p>${calories}</p>
+                        <p>${co2}</p>
+                    </div>
+                    <div class="styleA">
+                        <p>${portion}</p>
+                        <p>${preparationTime}</p>
+                    </div>
+                </div>
+                <ul class="listIngredient">`;
+    ingredients.split('\n').forEach(ingredient => {
+        contentHtml += `
+            <li class="ingredient">
+                <p>${ingredient}</p>
+            </li>
+        `;
+    });
+    contentHtml += `</ul>
+            </div>
+            <ul class="recetteEtapes">`;
+    preparations.split('\n').forEach(preparationStep => {
+        contentHtml += `<li class="etape">
+                            <p>${preparationStep}</p>
+                        </li>`;
+    });
+    contentHtml += `</ul>
+                </div>
+            </div>`;
+    detailName.innerHTML = contentHtml;
+    $('#listRecette').hide();
+    $('#detailRecette').show();
+    $('#voirListeRecettes').show();
+    $('#modifierFormBtn').hide();
+    $('#loader').hide();
+}
+
+// Ajouter un gestionnaire d'événements au bouton "Voir la liste des recettes"
+$(document).on('click', '#voirListeRecettes', function() {
+    $('#listRecette').show();
+    $('#detailRecette').hide();
+    $('#voirListeRecettes').hide();
+    $('#modifierFormBtn').show();
+});
+
+function errorDetails (error) 
+{
+    // Gestion des erreurs
+    console.error('Erreur lors de la récupération des détails de la recette:', error.response);
+    $('#loader').hide();
+}
+
+
 
 $(document).on('click', '#modifierFormBtn', function() {
     $('#formIngredient').show();
@@ -167,7 +336,7 @@ $(document).ready(function() {
         };
         console.log('params');
         console.log(params);
-
+        $('#loader').show();
         axios.post(apiUrl, params).then(reussite).catch(echec);
     });
 
@@ -192,17 +361,3 @@ $(document).ready(function() {
         actualiserListeIngredients();
     });
 });
-
-
-/**
- * Partie pour la liste des recettes
- */
-
-
-
-
-
-
-/**
- * Partie pour le détail des recettes
- */
