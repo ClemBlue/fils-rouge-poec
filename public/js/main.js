@@ -4,6 +4,18 @@
 // URL de l'API à appeler
 const apiUrl = 'http://localhost:8000/api/ingredients'; //2 changer url openai
 
+var ingredientsList = [];
+
+searchIngredients = [];
+
+function reussiteGetIngredient ( data ) 
+{
+    data.data.forEach(i => {
+        ingredientsList[i.name] = i.img;
+    });
+    console.log(Object.keys(ingredientsList));
+    autoCompleteIngredients(ingredientsList);
+}
 function reussite ( data ) 
 {
     console.log(data);
@@ -19,16 +31,13 @@ function reussite ( data )
         class="imgA" alt="poule au pot l'ancienne">
     <div class="card-body">
         <h5 class="card-title titre">${recipe.nom}</h5>
-        <p class="card-text">calorie</p>
-        <p class="card-text">CO2</p>
-        <a href="" class="btn btn-primary"> Allez à la recherche </a>
+        <a href="" class="btn btn-primary"> Afficher cette recette </a>
     </div>
     </div>`;
-    })
+    });
     divName.innerHTML = htmlContent;
     $('#formIngredient').hide();
     $('#listRecette').show();
-    $('#modifierFormBtn').show();
 }
 
 function echec (error) 
@@ -43,8 +52,63 @@ $(document).on('click', '#modifierFormBtn', function() {
     $(this).hide();
 });
 
+function autoCompleteIngredients(ingredientsList) {
+    console.log(ingredientsList);
+    if (ingredientsList != null) {
+        var isSelected = false; // Flag to check if a valid option is selected
+
+        $("#autocompleteSearch").autocomplete({
+            position: { my : "left top", at: "left bottom", collision: "flip" },
+            source: Object.keys(ingredientsList),
+            select: function(event, ui) {
+                isSelected = true; // Set flag to true when a valid option is selected
+                $("#selectedOptions").append("<li class='list-group-item' style='background-size: cover; background-image:url(" + ingredientsList[ui.item.value] + ")'><span class='ingredient-item'>" + ui.item.value + " </span><button type='button' class='btn btn-sm btn-danger remove-item'>X</button></li>");
+                searchIngredients.push(ui.item.value);
+                if (searchIngredients.length > 2) {
+                    $("#searchIngredientButton").show();
+                }
+                $(this).val('');
+                return false;
+            },
+            change: function(event, ui) {
+                if (!isSelected && ingredientsList != null) {
+                    $(this).val(""); // Clear the input if the value is not from the list
+                }
+                isSelected = false; // Reset the flag for the next selection
+            }
+        });
+    } else {
+        $("#autocompleteSearch").autocomplete({disabled: true});
+    }
+}
+
+
 /* Fonction pour faire la liste des ingrédients renseignés dans le formulaire d'ingrédient */
 $(document).ready(function() {
+
+    axios.get(apiUrl).then(reussiteGetIngredient).catch(echec);
+
+    $("#selectedOptions").on("click", ".remove-item", function(){
+        li = $(this).closest('li');
+        searchIngredients.splice(searchIngredients.indexOf(li.text) - 1, 1);
+        li.remove(); // Supprime l'élément de liste
+        if (searchIngredients.length <= 2) {
+            $("#searchIngredientButton").hide();
+        }
+    });
+        
+    $("#searchType").select2({
+        minimumResultsForSearch: Infinity
+    });
+    $("#searchType").on('select2:select', function() {
+        if ($(this).val() === "ingredients") {
+            // Activer l'autocomplétion pour les ingrédients
+            autoCompleteIngredients(ingredientsList);
+        } else {
+            // Désactiver l'autocomplétion pour les recettes
+            autoCompleteIngredients(null);
+        }
+    });   
 
     $('#listRecette').hide();
 
@@ -76,6 +140,7 @@ $(document).ready(function() {
         // Ajout des boutons à l'élément d'ingrédient et ajout à la liste visuelle
         nouvelIngredient.append(boutonSupprimer).append(boutonModifier);
         $('#liste_ingredients').append(nouvelIngredient);
+
     }
 
     function actualiserListeIngredients() {
@@ -170,6 +235,28 @@ $(document).ready(function() {
         console.log(params);
 
         axios.post(apiUrl, params).then(reussite).catch(echec);
+    });
+
+    $('#searchIngredientButton').click(function(event) {
+        event.preventDefault(); // Empêche l'envoi du formulaire par défaut
+
+        if (searchIngredients.length > 2) {
+            // Récupération des valeurs du formulaire
+            var formData = {
+                ingredient: searchIngredients,
+            };
+            const params = {
+                ingredients: formData.ingredient.map(item => {
+                    return {
+                        "label": item
+                    };
+                }),
+            };
+            console.log('params');
+            console.log(params);
+
+            axios.post(apiUrl, params).then(reussite).catch(echec);
+        }
     });
 
     $('#btnModifier').on('click', function() {

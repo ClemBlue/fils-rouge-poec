@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\IngredientRepository;
 use App\Repository\ParametersRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -21,7 +22,23 @@ class IngredientController extends AbstractController
         $this->apiUrl = $parameterBag->get('openai_api_url');
     }
 
-    #[Route('/api/ingredients', name: 'app_api_ingredients')]
+    #[Route('/api/ingredients', name: 'app_api_ingredients_get', methods: ["GET"])]
+    public function getIngredients(Request $request, IngredientRepository $repository): JsonResponse
+    { 
+        $ingredients = $repository->findAll();
+        $ingredientsArray = [];
+        foreach ($ingredients as $ingredient) {
+            $ingredientsArray[] = [
+                'id' => $ingredient->getId(),
+                'name' => $ingredient->getName(),
+                'img' => $ingredient->getImg(),
+                'unit' => $ingredient->getUnit()
+            ];
+        }
+        return $this->json($ingredientsArray);
+    }
+
+    #[Route('/api/ingredients', name: 'app_api_ingredients_post', methods: ["POST"])]
     public function callOpenAPI(Request $request , ParametersRepository $repository): JsonResponse
     { 
         $parameter = $repository->findOneByName("openai_api_key");
@@ -48,15 +65,13 @@ class IngredientController extends AbstractController
             if($key === 'ingredients' && is_array($value)){
                 foreach ($value as $ingredient) {
                     // vérifier si les parametres sont presents
-                    if (!isset($ingredient['label'])|| !isset($ingredient['quantity'])  || !isset($ingredient['unit']))
+                    if (!isset($ingredient['label']))
                     {
                         return new JsonResponse(['error '=> 'Missing requered parametrs'], JsonResponse::HTTP_BAD_REQUEST);
                     } 
                     //recuperer les parametres
                     $label = $ingredient['label'];
-                    $quantity= $ingredient['quantity'];
-                    $unit= $ingredient['unit'];
-                    $ingredientsString .= $label . " " . $quantity . " " . $unit. ", ";
+                    $ingredientsString .= $label . ", ";
                 }
             } elseif ($key === 'portions') {
                 $portions = $value;
@@ -79,7 +94,7 @@ class IngredientController extends AbstractController
                 'Content-Type' => 'application/json',
             ],
             'json' => [
-                'messages' => array(array("role" => "user", "content" => "donne moi les noms de recettes, la quantité de CO² moyen et le nombre moyen de calorie à partir des ingrédients, des mots clés suivants : " . $motClesString . ", et du nombre de portions : " . $portions . ". Sous la forme JSON, ne retourne que le JSON sans détailler les recettes: " . $ingredientsString)),
+                'messages' => array(array("role" => "user", "content" => "donne moi les noms de recettes à partir des ingrédients " . $ingredientsString . " sous la forme JSON {'recettes': [{'nom': 'recette 1', 'nom' : 'recette 2'}]}. Ne retourne que du JSON")),
                 'max_tokens' => 500,
                 'model' => 'gpt-3.5-turbo'
             ],
@@ -87,7 +102,7 @@ class IngredientController extends AbstractController
         // Process $data as needed
         $array = $response->toArray();
 
-        $jsonResponse = new JsonResponse($array['choices'][0]['message']['content'], 200, [], true);(html_entity_decode($array['choices'][0]['message']['content']));
+        $jsonResponse = new JsonResponse($array['choices'][0]['message']['content'], 200, [], true);
         $jsonResponse->headers->set('Access-Control-Allow-Origin', 'http://localhost');
         return $jsonResponse;
     }

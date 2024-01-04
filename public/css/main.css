@@ -1,6 +1,6 @@
 /* Votre CSS ici */
 html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var,
@@ -26,6 +26,8 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+    background-image: url(../images/bg.jpg);
+    background-size: contain;
 }
 ol, ul {
 	list-style: none;
@@ -46,7 +48,7 @@ table {
 
 :root {
     --main-primary-color: rgb(84, 228, 84);
-    --main-background-color: grey;
+    --main-background-color: white;
     --main-text-color: black;
 }
 html, body{
@@ -55,7 +57,7 @@ html, body{
 
 .content {
     flex: 1 0 auto;
-    margin: 1rem 5rem ;
+    margin: 4rem 5rem ;
 }
 
 .composant {
@@ -89,22 +91,61 @@ html, body{
 
 header {
     color :var(--main-text-color);
-    background-color: var(--main-background-color);
     display: flex;
     flex-direction: row;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     font-size: 25px;
     align-items: center;
-    height: 150px;
+    height: 300px;
 }
 header h1{
     text-align: center;
     margin: 0 auto;
 }
 header img{
-    width: 150px;
+    width: 300px;
     margin: 20px;
-} 
+}
+.row {
+    width: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+    font-family: cursive;
+}
+
+.remove-item {
+    width: 20px;
+    height: 20px;
+    font-size: 10px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+}
+
+.horizontal-list {
+    display: inline-block;
+    border-radius: 2em 2em;
+}
+.list-group-item {
+    display: inline-block;
+    margin-left: 10px;
+    border-radius: 3em;
+    font-family: cursive;
+    height: 80px;
+    width: 80px;
+}
+
+.ingredient-item {  
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    margin-top: 70px;
+    margin-left: -40px;
+}
+
 
 .titrecontact {
 
@@ -346,14 +387,94 @@ footer {
     bottom: 0;
     width: 100%;
     height: 5rem;/* Footer height */
-    background-color: var(--main-background-color);
+    background-color: #aaa;
     display: flex;
     align-items: center;
     justify-content: space-evenly;
 }
 footer a{
-    color: var(--main-text-color);
+    color: #f4c890;
     text-decoration: none;
+}
+
+.ui-autocomplete {
+    background-color: #eee;
+    border: none;
+    border-radius: 0 2em 2em 0;
+    display: inline-block;
+    width: 70%;
+    height: 50px;
+}
+
+.ui-menu {
+    max-width: 70%; 
+    border-radius: 0 2em 2em 0;
+}
+.ui-menu-item {
+    cursor: pointer;
+    font-size: 14px;
+    font-family: cursive;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+
+.ui-autocomplete:focus {
+    outline: none;
+}
+
+#searchIngredientButton {
+    background-color: #f4c890;
+    border: 0;
+    font-size: 25px;
+    margin-top: 80px;
+    display: none;
+}
+
+.btn-primary {
+    background-color: #f4c890;
+    border: 0;
+}
+
+#searchType {
+    display: inline-block;
+    width: 30%;
+    background-color: #f4c890;
+    border: none;
+    border-radius: 2em 0 0 2em;
+}
+
+.select2-container--default .select2-selection--single {
+    display: inline-block;
+    background-color: #f4c890 !important;
+    border: none !important;
+    border-radius: 2em 0 0 2em !important;
+    height: 50px !important;
+    padding-right: 0px !important;
+}
+
+.row > * {
+    padding-right: 0px !important;
+}
+
+.select2-selection__rendered {
+    line-height: 50px !important;
+}
+
+.select2-results__option {
+    display: inline-block;
+    width: 100%;
+    background-color: #f4c890;
+    border: none;
+    border-radius: 2em 0 0 2em;
+}
+
+.select2-container .select2-dropdown {
+    border: none;
+}
+
+.select2-selection__arrow b{
+    display:none !important;
 }
 
 
