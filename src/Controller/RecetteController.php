@@ -27,6 +27,7 @@ class RecetteController extends AbstractController
     {
         // Get the prompt from the request query parameters
         $text = $request->query->get('text', '');
+
         $parameter = $repository->findOneByName("openai_api_key");
 
         if (!$parameter) {
@@ -40,11 +41,12 @@ class RecetteController extends AbstractController
                 'Content-Type' => 'application/json',
             ],
             'json' => [
-                'messages' => array(array("role" => "user", "content" => "donne moi la recette de ".$text." sous forme json avec la liste des ingrédients (comportant leurs quantités), la liste des étapes, la portion pour laquelle la recette est prévus, le temps de préparation, les calories et le co2 moyen")),
+                'messages' => array(array("role" => "user", "content" => "Je souhaite une recette ".$text.". Peux tu me fournir la liste des ingrédients, les étapes de préparation, la portion pour laquelle la recette est prévue, le temps de préparation, les calories et le co2 moyen ?")),
                 'max_tokens' => 2000,
                 'model' => 'gpt-3.5-turbo'
             ],
         ]);
+        
         // Process $data as needed
         $array = $response->toArray();
 

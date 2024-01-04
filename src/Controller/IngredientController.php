@@ -79,7 +79,7 @@ class IngredientController extends AbstractController
                 'Content-Type' => 'application/json',
             ],
             'json' => [
-                'messages' => array(array("role" => "user", "content" => "donne moi les noms de recettes, la quantité de CO² moyen et le nombre moyen de calorie à partir des ingrédients, des mots clés suivants : " . $motClesString . ", et du nombre de portions : " . $portions . ". Sous la forme JSON, ne retourne que le JSON sans détailler les recettes: " . $ingredientsString)),
+                'messages' => array(array("role" => "user", "content" => "Donne moi une liste de recette faisable en utilisant la liste des ingrédients suivant : " . $ingredientsString . ". Tu n'as pas besoin de rentrer dans les détails je souhaite juste leurs noms sans prendre en compte la quantité d'ingrédients nécessaire à la réalisation de ses recettes ou si il manque des ingrédients.")),
                 'max_tokens' => 2000,
                 'model' => 'gpt-3.5-turbo'
             ],
