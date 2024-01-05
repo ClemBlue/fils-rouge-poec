@@ -83,7 +83,7 @@ class IngredientController extends AbstractController
             ],
             'json' => [
                 'messages' => array(array("role" => "user", "content" => "donne moi les noms de recettes à partir des ingrédients " . $ingredientsString . " sous la forme JSON {'recettes': [{'nom': 'recette 1', 'nom' : 'recette 2'}]}. Ne retourne que du JSON")),
-                'max_tokens' => 500,
+                'max_tokens' => 2000,
                 'model' => 'gpt-3.5-turbo'
             ],
         ]);

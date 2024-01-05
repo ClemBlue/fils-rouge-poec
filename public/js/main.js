@@ -32,8 +32,6 @@ function reussite ( data )
                 class="imgA" alt="poule au pot l'ancienne">
             <div class="card-body">
                 <h5 class="card-title titre">${recipe.nom}</h5>
-                <p class="card-text">calorie</p>
-                <p class="card-text">CO2</p>
                 <button class="btn btn-primary details"> Voir recette </button>
             </div>
         </div>`;
@@ -154,23 +152,12 @@ function successDetails(data) {
     let detailName = document.getElementById("detailRecette");
     let contentHtml = '';
     contentHtml += `<div class="content">
-        <div class="recetteHeader">
-            <img class="image-recette" src="https://img.cuisineaz.com/660x660/2015/10/01/i38134-tarte-fine-poire-et-roquefort.webp" alt="Image de la recette">
+        <div class="recetteHeader" style="background-image:url('https://img.cuisineaz.com/660x660/2015/10/01/i38134-tarte-fine-poire-et-roquefort.webp')">
             <h2>${recipeName}</h2>
         </div>
 
         <div class="recetteInfo">
             <div class="sidebar">
-                <div class="recetteDetail">
-                    <div class="styleA">
-                        <p>${calories}</p>
-                        <p>${co2}</p>
-                    </div>
-                    <div class="styleA">
-                        <p>${portion}</p>
-                        <p>${preparationTime}</p>
-                    </div>
-                </div>
                 <ul class="listIngredient">`;
     ingredients.split('\n').forEach(ingredient => {
         contentHtml += `
@@ -180,6 +167,12 @@ function successDetails(data) {
         `;
     });
     contentHtml += `</ul>
+                <div class="recetteDetail">
+                    <p>${portion}</p>
+                    <p>${preparationTime}</p>
+                    <p>${calories}</p>
+                    <p>${co2}</p>    
+                </div>
             </div>
             <ul class="recetteEtapes">`;
     preparations.split('\n').forEach(preparationStep => {
@@ -244,7 +237,7 @@ function autoCompleteIngredients(ingredientsList) {
             source: Object.keys(ingredientsList),
             select: function(event, ui) {
                 isSelected = true; // Set flag to true when a valid option is selected
-                $("#selectedOptions").append("<li class='list-group-item' style='background-size: cover; background-image:url(" + ingredientsList[ui.item.value] + ")'><span class='ingredient-item'>" + ui.item.value + " </span><button type='button' class='btn btn-sm btn-danger remove-item'>X</button></li>");
+                $("#selectedOptions").append("<li class='item'><button type='button' class='buttonItem remove-item'><span style='background-size: cover; background-image:url(" + ingredientsList[ui.item.value] + ")' class='item-image'></span><p class='item-titre'>" + ui.item.value + "</p></button></li>");
                 searchIngredients.push(ui.item.value);
                 if (searchIngredients.length > 2) {
                     $("#searchIngredientButton").show();
@@ -271,12 +264,13 @@ $(document).ready(function() {
     axios.get(apiUrl).then(reussiteGetIngredient).catch(echec);
 
     $("#selectedOptions").on("click", ".remove-item", function(){
-        li = $(this).closest('li');
-        searchIngredients.splice(searchIngredients.indexOf(li.text) - 1, 1);
-        li.remove(); // Supprime l'élément de liste
+        var li = $(this).closest('li');
+        var removedIngredient = li.text().trim();
+        searchIngredients = searchIngredients.filter(item => item !== removedIngredient);
+        li.remove();
         if (searchIngredients.length <= 2) {
-            $("#searchIngredientButton").hide();
-        }
+        $("#searchIngredientButton").hide();
+    }
     });
         
     $("#searchType").select2({

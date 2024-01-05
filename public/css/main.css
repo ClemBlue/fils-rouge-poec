@@ -54,7 +54,9 @@ table {
 html, body{
     height: 100%;
 }
-
+.ui-helper-hidden-accessible{
+    display:none;
+}
 .content {
     flex: 1 0 auto;
     margin: 4rem 5rem ;
@@ -112,40 +114,44 @@ header img{
 
 a {
     text-decoration: none;
-    color: #000;
+    color: var(--main-text-color);
     font-family: cursive;
 }
 
-.remove-item {
-    width: 20px;
-    height: 20px;
-    font-size: 10px;
+.list-group-item {
+    display: flex;
+    flex-direction: row;
+    font-family: cursive;
+    background: none;
+    border: none;
+}
+.item {
+    width: 5rem;
+    height: 5rem;
+    margin-right: 1rem;
+    justify-content: flex-start;
+}
+.buttonItem {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background: none;
+    border: none;
     margin: 0;
     padding: 0;
-    position: absolute;
 }
-
-.horizontal-list {
-    display: inline-block;
-    border-radius: 2em 2em;
+.buttonItem:hover{
+    opacity: 0.4;
+    
 }
-.list-group-item {
-    display: inline-block;
-    margin-left: 10px;
-    border-radius: 3em;
-    font-family: cursive;
-    height: 80px;
-    width: 80px;
+.item-image{
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
 }
-
-.ingredient-item {  
-    position: absolute;
-    width: 80px;
-    height: 80px;
-    margin-top: 70px;
-    margin-left: -40px;
-}
-
 
 .titrecontact {
     margin-bottom: 10px;
@@ -250,12 +256,14 @@ form{
 }
    
 .recetteHeader {
-    
     background-color: var(--main-background-color);
     justify-content: center;
     display: flex;
     align-items: center;
     flex-direction: row;
+    height: 5rem;
+    background-size: auto;
+    background-position: left;
     
 }
 .image-recette{
@@ -267,9 +275,14 @@ form{
 .recetteHeader h2 {
     margin: 0;
     color: var(--main-text-color);
+    text-shadow: 0 0 20px black;
 }
-
-
+.card{
+    margin-bottom: 2rem;
+}
+#voirListeRecettes {
+    margin-top: 2rem;
+}
 .recetteInfo {
     display: flex;
     justify-content: space-between;
@@ -279,31 +292,38 @@ form{
 /* Style de la barre latérale contenant les détails de la recette et la liste d'ingrédients */
 .sidebar {
     width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* Style des détails de la recette (calories, CO2, temps de préparation, portion) */
 .recetteDetail { 
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
 }
 .recetteDetail p {
-    margin: 5px ;
+    margin: 5px;
+    text-align: justify;
 }
 
 /* Style de la liste d'ingrédients */
 .listIngredient {
     list-style: none;
     padding: 0;
-   
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    margin-bottom: 2rem;
 }
 
 /* Style des éléments de la liste d'ingrédients */
 .ingredient {
     border-bottom: 1px solid #ccc;
     padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    text-align: center;
+    text-align: start;
 }
 
 /* Style des étapes de la recette */
@@ -311,7 +331,10 @@ form{
     width: 65%;
     list-style: none;
     padding: 0;
-    
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
 }
 
 /* Style des étapes individuelles de la recette */
@@ -319,7 +342,6 @@ form{
     border-bottom: 1px solid #ccc;
     padding: 10px;
     text-align: center;
-    float : right;
 }
 
 /* Style des étapes individuelles de la recette */
@@ -365,18 +387,18 @@ footer {
     bottom: 0;
     width: 100%;
     height: 5rem;/* Footer height */
-    background-color: #aaa;
+    background-color: var(--main-background-color);
     display: flex;
     align-items: center;
     justify-content: space-evenly;
 }
 footer a{
-    color: #f4c890;
+    color: var(--main-primary-color);
     text-decoration: none;
 }
 
 .ui-autocomplete {
-    background-color: #eee;
+    background-color: var(--main-background-color);
     border: none;
     border-radius: 0 2em 2em 0;
     display: inline-block;
@@ -402,29 +424,28 @@ footer a{
 }
 
 #searchIngredientButton {
-    background-color: #f4c890;
+    background-color: var(--main-background-color);
     border: 0;
     font-size: 25px;
-    margin-top: 80px;
     display: none;
 }
 
 .btn-primary {
-    background-color: #f4c890;
+    background-color: var(--main-background-color);
     border: 0;
 }
 
 #searchType {
     display: inline-block;
     width: 30%;
-    background-color: #f4c890;
+    background-color: var(--main-background-color);
     border: none;
     border-radius: 2em 0 0 2em;
 }
 
 .select2-container--default .select2-selection--single {
     display: inline-block;
-    background-color: #f4c890 !important;
+    background-color: var(--main-primary-color) !important;
     border: none !important;
     border-radius: 2em 0 0 2em !important;
     height: 50px !important;
@@ -442,7 +463,7 @@ footer a{
 .select2-results__option {
     display: inline-block;
     width: 100%;
-    background-color: #f4c890;
+    background-color: var(--main-background-color);
     border: none;
     border-radius: 2em 0 0 2em;
 }
