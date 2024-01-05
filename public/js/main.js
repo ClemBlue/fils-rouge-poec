@@ -419,6 +419,8 @@ $(document).ready(function() {
             };
             console.log('params');
             console.log(params);
+            $('#loader').show();
+            $("#listRecette").text("");
             axios.post(apiUrl, params).then(reussite).catch(echec);
         }
     });
