@@ -5,135 +5,42 @@
 const apiUrl = 'http://localhost:8000/api/ingredients';
 const apiDetailUrl = 'http://localhost:8000/api/recettes'
 
-/* Fonction pour faire la liste des ingrédients renseignés dans le formulaire d'ingrédient */
-$(document).ready(function() {
+var ingredientsList = [];
 
-    $('#listRecette').hide();
+searchIngredients = [];
 
-    const ingredients = ["comcombre", "courgette", "confiture", "carotte", "chou-fleur", "citron", "ciboulette", "coriandre", "cumin", "curcuma"];
-    var listeIngredients = [];
-
-    document.getElementById('suggestions').addEventListener('click', function(e) {
-        if (e.target.classList.contains('suggestion')) {
-            ajouterIngredient(e.target.textContent);
-            document.getElementById('ingredient').value = '';
-            document.getElementById('suggestions').innerHTML = '';
-        }
+function reussiteGetIngredient ( data ) 
+{
+    data.data.forEach(i => {
+        ingredientsList[i.name] = i.img;
     });
-    
-    document.getElementById('ingredient').addEventListener('input', function() {
-        const input = this.value.toLowerCase();
-        if (input.length > 0) {
-            const suggestions = ingredients.filter(ingredient => ingredient.toLowerCase().startsWith(input));
-            document.getElementById('suggestions').innerHTML = suggestions.map(suggestion => `<div class="suggestion">${suggestion}</div>`).join('');
-        } else {
-            document.getElementById('suggestions').innerHTML = ''; // Vide les suggestions
-        }
-    });
-    // Fonction pour ajouter un ingrédient à la liste visuelle et à la liste JavaScript
-    function ajouterIngredient(ingredient) {
-        // Création de la structure HTML de l'ingrédient avec les boutons Supprimer et Modifier
-        var nouvelIngredient = $('<div class="ingredient flex"><p>' + ingredient + '</p></div>');
-
-        var boutonSupprimer = $('<button class="btn btn-primary">Supprimer</button>').click(function() {
-            // Suppression visuelle de l'ingrédient et suppression de l'élément correspondant dans la liste JavaScript
-            var index = $(this).parent().index();
-            $(this).parent().remove();
-            listeIngredients.splice(index, 1);
-        });
-
-        // Ajout des boutons à l'élément d'ingrédient et ajout à la liste visuelle
-        nouvelIngredient.append(boutonSupprimer);
-        $('#liste_ingredients').append(nouvelIngredient);
-    }
-
-    function actualiserListeIngredients() {
-        $('#liste_ingredients').empty(); // Vider la liste visuelle
-
-        // Reconstruire la liste visuelle à partir des données dans listeIngredients
-        listeIngredients.forEach(function(ingredient) {
-            ajouterIngredient(ingredient.ingredient);
-        });
-    }
-    
-
-
-    // Gestionnaire d'événement pour le bouton "Ajouter"
-    $('#ajouter').on('click', function() {
-        var ingredient = $('#ingredient').val();
-
-        if (ingredient !== '') {
-            // Appel de la fonction pour ajouter l'ingrédient à la liste visuelle et à la liste JavaScript
-            ajouterIngredient(ingredient);
-
-            // Ajout de l'ingrédient à la liste JavaScript
-            var nouvelIngredientObj = {
-                ingredient: ingredient,
-            };
-            listeIngredients.push(nouvelIngredientObj);
-
-            // Réinitialisation des champs après l'ajout de l'ingrédient
-            $('#ingredient').val('');
-        } else {
-            alert('Veuillez remplir tous les champs.');
-        }
-    });
-
-    // Gestionnaire d'événement pour la soumission du formulaire
-    $('#formIngredient').submit(function(event) {
-        event.preventDefault(); // Empêche l'envoi du formulaire par défaut
-
-        // Récupération des valeurs du formulaire
-        var formData = {
-            ingredient: listeIngredients,
-        };
-        const params = {
-            ingredients: formData.ingredient.map(item => {
-                return {
-                    "label": item.ingredient,
-                };
-            }),
-        };
-        console.log('params');
-        console.log(params);
-        $('#loader').show();
-        axios.post(apiUrl, params).then(reussite).catch(echec);
-    });
-
-
-    // Ajoutez d'autres ingrédients ici
-
-    /*document.getElementById('ingredient').addEventListener('input', function() {
-        const input = this.value.toLowerCase();
-        const suggestions = ingredients.filter(ingredient => ingredient.toLowerCase().startsWith(input));
-        document.getElementById('suggestions').innerHTML = suggestions.map(suggestion => `<div class="suggestion">${suggestion}</div>`).join('');
-        if (!suggestions.includes(input)) {
-            document.getElementById('suggestions').innerHTML += `<button id="ajouterIngredient">Ajouter</button>`;
-        }
-    });
-    
-    document.getElementById('suggestions').addEventListener('click', function(e) {
-        if (e.target.classList.contains('suggestion')) {
-            document.getElementById('liste_ingredients').innerHTML += `<div>${e.target.textContent}</div>`;
-            document.getElementById('ingredient').value = '';
-            document.getElementById('suggestions').innerHTML = ''; // Vide les suggestions
-        } else if (e.target.id === 'ajouterIngredient') {
-            document.getElementById('liste_ingredients').innerHTML += `<div>${document.getElementById('ingredient').value}</div>`;
-            document.getElementById('ingredient').value = '';
-            document.getElementById('suggestions').innerHTML = ''; // Vide les suggestions
-        }
-    });
-    */
-
-});
-
-
-
-
-
-/* Traitement du formulaire INGREDIENT si réussite*/
+    console.log(Object.keys(ingredientsList));
+    autoCompleteIngredients(ingredientsList);
+}
 function reussite ( data ) 
 {
+    console.log(data);
+     // Traitement des données de la réponse
+    let recipes = data.data.recettes; // 7 recupere la reponse 
+    console.log('recipes');
+    console.log(recipes);
+    let divName = document.getElementById( "listRecette" );
+    let htmlContent = '';
+    recipes.forEach(recipe => {
+        htmlContent += `<div class="card" style="width: 15rem;">
+            <img src="https://img.cuisineaz.com/1024x768/2013/12/20/i18391-poule-au-pot-et-riz-long.jpeg"
+                class="imgA" alt="poule au pot l'ancienne">
+            <div class="card-body">
+                <h5 class="card-title titre">${recipe.nom}</h5>
+                <p class="card-text">calorie</p>
+                <p class="card-text">CO2</p>
+                <button class="btn btn-primary details"> Voir recette </button>
+            </div>
+        </div>`;
+    });
+    divName.innerHTML = htmlContent;
+    $('#formIngredient').hide();
+    $('#listRecette').show();
     if (data.data.includes("1. ")) {
         // Traitement des données pour extraire les noms de recettes
         let listStart = data.data.indexOf("1. ");
@@ -326,3 +233,233 @@ $(document).on('click', '#modifierFormBtn', function() {
     g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
   })();
 /* End Matomo Code */
+
+function autoCompleteIngredients(ingredientsList) {
+    console.log(ingredientsList);
+    if (ingredientsList != null) {
+        var isSelected = false; // Flag to check if a valid option is selected
+
+        $("#autocompleteSearch").autocomplete({
+            position: { my : "left top", at: "left bottom", collision: "flip" },
+            source: Object.keys(ingredientsList),
+            select: function(event, ui) {
+                isSelected = true; // Set flag to true when a valid option is selected
+                $("#selectedOptions").append("<li class='list-group-item' style='background-size: cover; background-image:url(" + ingredientsList[ui.item.value] + ")'><span class='ingredient-item'>" + ui.item.value + " </span><button type='button' class='btn btn-sm btn-danger remove-item'>X</button></li>");
+                searchIngredients.push(ui.item.value);
+                if (searchIngredients.length > 2) {
+                    $("#searchIngredientButton").show();
+                }
+                $(this).val('');
+                return false;
+            },
+            change: function(event, ui) {
+                if (!isSelected && ingredientsList != null) {
+                    $(this).val(""); // Clear the input if the value is not from the list
+                }
+                isSelected = false; // Reset the flag for the next selection
+            }
+        });
+    } else {
+        $("#autocompleteSearch").autocomplete({disabled: true});
+    }
+}
+
+
+/* Fonction pour faire la liste des ingrédients renseignés dans le formulaire d'ingrédient */
+$(document).ready(function() {
+
+    axios.get(apiUrl).then(reussiteGetIngredient).catch(echec);
+
+    $("#selectedOptions").on("click", ".remove-item", function(){
+        li = $(this).closest('li');
+        searchIngredients.splice(searchIngredients.indexOf(li.text) - 1, 1);
+        li.remove(); // Supprime l'élément de liste
+        if (searchIngredients.length <= 2) {
+            $("#searchIngredientButton").hide();
+        }
+    });
+        
+    $("#searchType").select2({
+        minimumResultsForSearch: Infinity
+    });
+    $("#searchType").on('select2:select', function() {
+        if ($(this).val() === "ingredients") {
+            // Activer l'autocomplétion pour les ingrédients
+            autoCompleteIngredients(ingredientsList);
+        } else {
+            // Désactiver l'autocomplétion pour les recettes
+            autoCompleteIngredients(null);
+        }
+    });   
+
+    $('#listRecette').hide();
+
+    var listeIngredients = [];
+    var listeMotsCles = [];
+
+    // Fonction pour ajouter un ingrédient à la liste visuelle et à la liste JavaScript
+    function ajouterIngredient(ingredient, quantite, unite) {
+        // Création de la structure HTML de l'ingrédient avec les boutons Supprimer et Modifier
+        var nouvelIngredient = $('<div class="ingredient flex"><p>' + ingredient + ' ' + quantite + ' ' + unite + '</p></div>');
+
+        var boutonSupprimer = $('<button class="btn btn-primary">Supprimer</button>').click(function() {
+            // Suppression visuelle de l'ingrédient et suppression de l'élément correspondant dans la liste JavaScript
+            var index = $(this).parent().index();
+            $(this).parent().remove();
+            listeIngredients.splice(index, 1);
+        });
+
+        var boutonModifier = $('<button class="btn btn-primary" data-toggle="modal" data-target="#modal">Modifier</button>').click(function() {
+            ingredientAModifierIndex = $(this).parent().index(); // Stocke l'index de l'ingrédient à modifier
+
+            // Affiche une modale pour modifier l'ingrédient
+            $('#modal').modal('show');
+            $('#modifierIngredient').val(listeIngredients[ingredientAModifierIndex].ingredient);
+            $('#modifierQuantite').val(listeIngredients[ingredientAModifierIndex].quantite);
+            $('#modifierUnite').val(listeIngredients[ingredientAModifierIndex].unite);
+        });
+
+        // Ajout des boutons à l'élément d'ingrédient et ajout à la liste visuelle
+        nouvelIngredient.append(boutonSupprimer).append(boutonModifier);
+        $('#liste_ingredients').append(nouvelIngredient);
+
+    }
+
+    function actualiserListeIngredients() {
+        $('#liste_ingredients').empty(); // Vider la liste visuelle
+
+        // Reconstruire la liste visuelle à partir des données dans listeIngredients
+        listeIngredients.forEach(function(ingredient) {
+            ajouterIngredient(ingredient.ingredient, ingredient.quantite, ingredient.unite);
+        });
+    }
+    function actualiserListeMotsCles() {
+        $('#liste_mots_cles').empty();
+
+        listeMotsCles.forEach(function(motCle) {
+            var nouvelElement = $('<div class="mot-cle"><p>' + motCle + '</p><button class="supprimer btn btn-primary">Supprimer</button></div>');
+
+            nouvelElement.find('.supprimer').click(function() {
+                var index = $(this).parent().index();
+                $(this).parent().remove();
+                listeMotsCles.splice(index, 1);
+            });
+
+            $('#liste_mots_cles').append(nouvelElement);
+        });
+    }
+    $('#ajouterMotCle').on('click', function() {
+        var motCle = $('#mots_cles').val();
+
+        if (motCle !== '') {
+            listeMotsCles.push(motCle);
+            $('#mots_cles').val('');
+            actualiserListeMotsCles();
+        } else {
+            alert('Veuillez entrer un mot-clé.');
+        }
+    });
+
+
+    // Gestionnaire d'événement pour le bouton "Ajouter"
+    $('#ajouter').on('click', function() {
+        var ingredient = $('#ingredient').val();
+        var quantite = $('#quantite').val();
+        var unite = $('#unite').val();
+
+        if (ingredient !== '' && quantite !== '') {
+            // Appel de la fonction pour ajouter l'ingrédient à la liste visuelle et à la liste JavaScript
+            ajouterIngredient(ingredient, quantite, unite);
+
+            // Ajout de l'ingrédient à la liste JavaScript
+            var nouvelIngredientObj = {
+                ingredient: ingredient,
+                quantite: quantite,
+                unite: unite
+            };
+            listeIngredients.push(nouvelIngredientObj);
+
+            // Réinitialisation des champs après l'ajout de l'ingrédient
+            $('#ingredient').val('');
+            $('#quantite').val('');
+            $('#unite').val('grammes');
+        } else {
+            alert('Veuillez remplir tous les champs.');
+        }
+    });
+
+    // Gestionnaire d'événement pour la soumission du formulaire
+    $('#formIngredient').submit(function(event) {
+        event.preventDefault(); // Empêche l'envoi du formulaire par défaut
+
+        // Récupération des valeurs du formulaire
+        var formData = {
+            ingredient: listeIngredients,
+            portions: $('#portions').val(),
+            mots_cles: listeMotsCles,
+        };
+        const params = {
+            ingredients: formData.ingredient.map(item => {
+                return {
+                    "label": item.ingredient,
+                    "quantity": parseFloat(item.quantite), // Convertir en nombre si nécessaire
+                    "unit": item.unite
+                };
+            }),
+            portions: formData.portions,
+            motscles: formData.mots_cles.map(item => {
+                return {
+                    "nom": item,
+                }
+            })
+        };
+        console.log('params');
+        console.log(params);
+        $('#loader').show();
+        axios.post(apiUrl, params).then(reussite).catch(echec);
+    });
+
+    $('#searchIngredientButton').click(function(event) {
+        event.preventDefault(); // Empêche l'envoi du formulaire par défaut
+
+        if (searchIngredients.length > 2) {
+            // Récupération des valeurs du formulaire
+            var formData = {
+                ingredient: searchIngredients,
+            };
+            const params = {
+                ingredients: formData.ingredient.map(item => {
+                    return {
+                        "label": item
+                    };
+                }),
+            };
+            console.log('params');
+            console.log(params);
+            $('#loader').show();
+            $("#listRecette").text("");
+            axios.post(apiUrl, params).then(reussite).catch(echec);
+        }
+    });
+
+    $('#btnModifier').on('click', function() {
+        ingredientAModifierIndex = $(this).parent().index();
+        $('#modifierIngredient').val(listeIngredients[ingredientAModifierIndex].ingredient);
+        $('#modifierQuantite').val(listeIngredients[ingredientAModifierIndex].quantite);
+        $('#modifierUnite').val(listeIngredients[ingredientAModifierIndex].unite);
+        $('#modal').modal('show'); // Utilisation de la méthode Bootstrap pour afficher la modale
+    });
+
+    // Gestionnaire d'événement pour la soumission du formulaire de modification
+    $('#modifierForm').submit(function(event) {
+        event.preventDefault();
+        var nouvelIngredient = {
+            ingredient: $('#modifierIngredient').val(),
+            quantite: $('#modifierQuantite').val(),
+            unite: $('#modifierUnite').val()
+        };
+        listeIngredients[ingredientAModifierIndex] = nouvelIngredient;
+        $('#modal').modal('hide'); // Utilisation de la méthode Bootstrap pour cacher la modale après la modification
+        actualiserListeIngredients();
+    });
+});
