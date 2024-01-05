@@ -27,7 +27,7 @@ function reussite ( data )
                     <h5 class="card-title titre">${recipe}</h5>
                     <p class="card-text">calorie</p>
                     <p class="card-text">CO2</p>
-                    <button class="btn btn-primary details"> Voir recette </button>
+                    <button class="btn btn-primary details" onclick="_paq.push(['trackEvent', 'Click Link', 'Voir le detail de la recette']);"> Voir recette </button>
                 </div>
             </div>`;
         })
