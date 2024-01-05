@@ -6,20 +6,7 @@
             <input type="text" class="form-control" id="ingredient" name="ingredient">
             <label for="ingredient">Ingrédient:</label>
         </div>
-        <div class="col-md-3 form-floating">
-            <input type="number" class="form-control" id="quantite" name="quantite">
-            <label for="quantite">Quantité:</label>
-        </div>
-        <div class="col-md-3 form-floating">
-            <select class="form-select" id="unite" name="unite">
-                <option value="grammes">Grammes</option>
-                <option value="millilitres">Millilitres</option>
-                <option value="cuillères à soupe">Cuillères à soupe</option>
-                <option value="cuillères à café">Cuillères à café</option>
-                <option value="nombre">Nombre</option>
-            </select>
-            <label for="unite">Unité:</label>
-        </div>
+        <div id="suggestions"> </div>
         <div class="col-md-3">
             <button class="btn btn-primary" id="ajouter" type="button">Ajouter</button>
         </div>
@@ -30,71 +17,9 @@
         <!-- La liste des ingrédients ajoutés apparaîtra ici -->
     </div>
 
-    <!-- Deuxième section avec des mots-clés -->
-    <div class="row bg-light py-3 mb-3 flex s3">
-        <div class="col-md-9 form-floating">
-            <input type="text" class="form-control" id="mots_cles" name="mots_cles">    
-            <label for="mots_cles">Mots-clés:</label>
-        </div>
-        <div class="col-md-3">
-            <button class="btn btn-primary" id="ajouterMotCle" type="button">Ajouter</button>
-        </div>
-       
-    </div>
-
-    <!-- Div pour la liste des mots-clés ajoutés -->
-    <div id="liste_mots_cles" class="bg-purple mb-3 s3">
-        <!-- La liste des mots-clés ajoutés apparaîtra ici -->
-    </div>
-
-    <!-- Troisième section avec des champs de portions -->
-    <div class="row bg-light py-3 mb-3 flex">
-        <div class="col-md-4 form-floating">
-            <input type="number" class="form-control" id="portions" name="portions">
-            <label for="portions">Portions:</label>
-        </div>
-    </div>
-
     <!-- Bouton d'envoi -->
     <div class="text-center">
         <button type="submit" class="btn btn-primary" onclick="_paq.push(['trackEvent', 'Click Link', 'Envoie du formulaire']);">Envoyer</button>
     </div>
 </form>
-
-<!-- Modal pour la modification -->
-<div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalLabel">Modifier l'ingrédient</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="modifierForm">
-                    <div class="mb-3">
-                        <label for="modifierIngredient" class="form-label">Ingrédient:</label>
-                        <input type="text" class="form-control" id="modifierIngredient" name="modifierIngredient">
-                    </div>
-                    <div class="mb-3">
-                        <label for="modifierQuantite" class="form-label">Quantité:</label>
-                        <input type="text" class="form-control" id="modifierQuantite" name="modifierQuantite">
-                    </div>
-                    <div class="mb-3">
-                        <label for="modifierUnite" class="form-label">Unité:</label>
-                        <select class="form-select" id="modifierUnite" name="modifierUnite">
-                            <option value="grammes">Grammes</option>
-                            <option value="millilitres">Millilitres</option>
-                            <option value="cuillères à soupe">Cuillères à soupe</option>
-                            <option value="cuillères à café">Cuillères à café</option>
-                            <option value="nombre">Nombre</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Modifier</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-
 
