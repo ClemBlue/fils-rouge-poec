@@ -35,6 +35,12 @@ $(document).ready(function() {
         // Création de la structure HTML de l'ingrédient avec les boutons Supprimer et Modifier
         var nouvelIngredient = $('<div class="ingredient flex"><p>' + ingredient + '</p></div>');
 
+        // Ajout de l'ingrédient à la liste JavaScript
+        var nouvelIngredientObj = {
+            ingredient: ingredient,
+        };
+        listeIngredients.push(nouvelIngredientObj);
+
         var boutonSupprimer = $('<button class="btn btn-primary">Supprimer</button>').click(function() {
             // Suppression visuelle de l'ingrédient et suppression de l'élément correspondant dans la liste JavaScript
             var index = $(this).parent().index();
@@ -56,8 +62,6 @@ $(document).ready(function() {
         });
     }
     
-
-
     // Gestionnaire d'événement pour le bouton "Ajouter"
     $('#ajouter').on('click', function() {
         var ingredient = $('#ingredient').val();
@@ -66,11 +70,7 @@ $(document).ready(function() {
             // Appel de la fonction pour ajouter l'ingrédient à la liste visuelle et à la liste JavaScript
             ajouterIngredient(ingredient);
 
-            // Ajout de l'ingrédient à la liste JavaScript
-            var nouvelIngredientObj = {
-                ingredient: ingredient,
-            };
-            listeIngredients.push(nouvelIngredientObj);
+
 
             // Réinitialisation des champs après l'ajout de l'ingrédient
             $('#ingredient').val('');
@@ -99,37 +99,7 @@ $(document).ready(function() {
         $('#loader').show();
         axios.post(apiUrl, params).then(reussite).catch(echec);
     });
-
-
-    // Ajoutez d'autres ingrédients ici
-
-    /*document.getElementById('ingredient').addEventListener('input', function() {
-        const input = this.value.toLowerCase();
-        const suggestions = ingredients.filter(ingredient => ingredient.toLowerCase().startsWith(input));
-        document.getElementById('suggestions').innerHTML = suggestions.map(suggestion => `<div class="suggestion">${suggestion}</div>`).join('');
-        if (!suggestions.includes(input)) {
-            document.getElementById('suggestions').innerHTML += `<button id="ajouterIngredient">Ajouter</button>`;
-        }
-    });
-    
-    document.getElementById('suggestions').addEventListener('click', function(e) {
-        if (e.target.classList.contains('suggestion')) {
-            document.getElementById('liste_ingredients').innerHTML += `<div>${e.target.textContent}</div>`;
-            document.getElementById('ingredient').value = '';
-            document.getElementById('suggestions').innerHTML = ''; // Vide les suggestions
-        } else if (e.target.id === 'ajouterIngredient') {
-            document.getElementById('liste_ingredients').innerHTML += `<div>${document.getElementById('ingredient').value}</div>`;
-            document.getElementById('ingredient').value = '';
-            document.getElementById('suggestions').innerHTML = ''; // Vide les suggestions
-        }
-    });
-    */
-
 });
-
-
-
-
 
 /* Traitement du formulaire INGREDIENT si réussite*/
 function reussite ( data ) 
@@ -157,17 +127,13 @@ function reussite ( data )
             </div>`;
         })
         divName.innerHTML = htmlContent;
-        $('#formIngredient').hide();
         $('#listRecette').show();
-        $('#modifierFormBtn').show();
         $('#loader').hide();
     } else {
         // Afficher un message d'erreur
         let divName = document.getElementById( "listRecette" );
         divName.innerHTML = "Aucune recette trouvée";
-        $('#formIngredient').hide();
         $('#listRecette').show();
-        $('#modifierFormBtn').show();
         $('#loader').hide();
     }
 }
@@ -287,7 +253,6 @@ function successDetails(data) {
     $('#listRecette').hide();
     $('#detailRecette').show();
     $('#voirListeRecettes').show();
-    $('#modifierFormBtn').hide();
     $('#loader').hide();
 }
 /* Traitement du DETAIL si echec*/
@@ -303,14 +268,6 @@ $(document).on('click', '#voirListeRecettes', function() {
     $('#listRecette').show();
     $('#detailRecette').hide();
     $('#voirListeRecettes').hide();
-    $('#modifierFormBtn').show();
-});
-
-// Ajouter un gestionnaire d'événements au bouton "Modifier le formulaire"
-$(document).on('click', '#modifierFormBtn', function() {
-    $('#formIngredient').show();
-    $('#listRecette').hide();
-    $(this).hide();
 });
 
 /* Matomo */
