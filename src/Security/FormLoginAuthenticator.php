@@ -44,7 +44,7 @@ class FormLoginAuthenticator extends AbstractAuthenticator implements Authentica
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
         // Your logic after successful authentication (e.g., redirecting the user)
-        return new RedirectResponse($this->urlGenerator->generate('app_homepage'));
+        return new RedirectResponse($this->urlGenerator->generate('app_admin_parametre'));
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response

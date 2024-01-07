@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityManagerInterface;
 class ParametreController extends AbstractController
 
 {
-    #[Route('/api/parametre', name: 'app_api_parametre')]
+    #[Route('/api/parametre', name: 'app_api_parametre', methods: ["GET"])]
     public function updateOpenApiKey(Request $request , ParametersRepository $repository, EntityManagerInterface $entityManager): Response
     { 
         $parameter = $repository->findOneByName("openai_api_key");
@@ -31,5 +31,29 @@ class ParametreController extends AbstractController
 
         return new Response();
         
+    }
+
+    #[Route('/admin/parametre', name: 'app_admin_parametre', methods: ["POST"])]
+    public function saveParameter(Request $request , ParametersRepository $repository, EntityManagerInterface $entityManager) {
+        $parameter = $repository->findOneByName("openai_api_key");
+        $newKey = $request->get('apiKey');
+        $parameter->setValue($newKey);
+        $entityManager->persist($parameter);
+         // Enregistrer les modifications dans la base de données
+        $entityManager->flush();
+        return $this->render('components/parameters.html.twig', [
+            'api_key' => $parameter->getValue(),
+            'success' => true
+        ]);
+    }
+
+    
+    #[Route('/admin/parametre', name: 'app_parameter_save')]
+    public function displayParameter(Request $request , ParametersRepository $repository) {
+        $parameter = $repository->findOneByName("openai_api_key");
+        return $this->render('components/parameters.html.twig', [
+            'api_key' => $parameter->getValue(),
+            'success' => false
+        ]);
     }
 }

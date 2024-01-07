@@ -1,0 +1,27 @@
+<!-- Inclus le composant header -->
+{% include 'components/header.html.twig' %}
+<div class="content">
+    <div class="card-header boxX">
+      <h2>Gestion des paramètres<h2>
+    </div>
+    {% if success %}
+    <div class="row">
+      <div class="alert alert-success col-sm" role="alert">
+        Paramètres enregistrés avec succès!
+      </div>
+    </div>
+    {% endif %}
+    <form action="{{ path('app_parameter_save') }}" method="post">
+      <div class="card-body boxXXX my-form-label">
+      <div class="col-12 bg-light ">
+         <div class="form-group">
+            <label for="apiKey">Clé API :</label>
+            <input type="text" class="form-control" id="apiKey" name="apiKey" placeholder="Entrez votre clé API OpenAI" value="{{ api_key }}">
+         </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Sauvegarder</button>
+      </div>
+    </form>
+</div>
+<!-- Inclus le composant footer -->
+{% include 'components/footer.html.twig' %}

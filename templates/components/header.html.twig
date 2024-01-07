@@ -26,5 +26,12 @@
             <div class="col-sm">
             </div>
             <div class="col-sm"><a href="/"><img src ="/images/logo_cuisine_ecolo.png"></a></div>
-            <div class="col-sm"><a href="/login" class="button">Connexion Admin</a></div>
+            <div class="col-sm">
+                {% if app.user %}
+                <a href="/admin/parametre" class="button">Paramètres</a> | 
+                <a href="/logout" class="button">Déconnexion</a>
+                {% else %}
+                    <a href="/login" class="button">Connexion Admin</a>
+                {% endif %}
+            </div>
         </header>

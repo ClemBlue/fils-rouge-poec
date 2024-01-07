@@ -3,8 +3,9 @@
 /* Ingrédient API */
 // URL de l'API à appeler
 const apiUrl = 'http://localhost:8000/api/ingredients';
-const apiDetailUrl = 'http://localhost:8000/api/recettes'
+const apiDetailUrl = 'http://localhost:8000/api/recettes';
 
+var recipeName = "";
 var ingredientsList = [];
 
 searchIngredients = [];
@@ -92,6 +93,7 @@ $(document).on('click', '.details', function() {
     };
     console.log('parameters');
     console.log(parameters);
+    $('#loader').show();
     axios.get(apiDetailUrl + '?text=' + parameters.text).then((data) => {
         successDetails.call(this, data); // Utiliser une fonction fléchée pour conserver la portée de "this"
     }).catch(errorDetails);
@@ -99,8 +101,9 @@ $(document).on('click', '.details', function() {
 });
 
 /* Traitement du DETAIL si réussite*/
-function successDetails(data) {
-    const recipeName = $(this).siblings('.card-title.titre').text();
+function successDetails(data, search = false) {
+    if (!search) // search = true: recherche par nom de recette
+        recipeName = $(this).siblings('.card-title.titre').text();
     console.log('Nom de la recette:');
     console.log(recipeName);
     const recipeText = data.data;
@@ -153,11 +156,12 @@ function successDetails(data) {
     let contentHtml = '';
     contentHtml += `<div class="content">
         <div class="recetteHeader" style="background-image:url('https://img.cuisineaz.com/660x660/2015/10/01/i38134-tarte-fine-poire-et-roquefort.webp')">
-            <h2>${recipeName}</h2>
+            <h2 style="color: white">Recette : ${recipeName}</h2>
         </div>
 
         <div class="recetteInfo">
             <div class="sidebar">
+                <span>Ingrédients:</span><br/>
                 <ul class="listIngredient">`;
     ingredients.split('\n').forEach(ingredient => {
         contentHtml += `
@@ -167,16 +171,19 @@ function successDetails(data) {
         `;
     });
     contentHtml += `</ul>
-                <div class="recetteDetail">
+            <div class="recetteDetail">
+                <span>Informations utiles:</span><br/>
                     <p>${portion}</p>
                     <p>${preparationTime}</p>
                     <p>${calories}</p>
                     <p>${co2}</p>    
-                </div>
             </div>
+            </div>
+            <div class="recetteEtapes">
             <ul class="recetteEtapes">`;
     preparations.split('\n').forEach(preparationStep => {
-        contentHtml += `<li class="etape">
+        if (preparationStep.trim() != "")
+            contentHtml += `<li class="etape">
                             <p>${preparationStep}</p>
                         </li>`;
     });
@@ -186,7 +193,8 @@ function successDetails(data) {
     detailName.innerHTML = contentHtml;
     $('#listRecette').hide();
     $('#detailRecette').show();
-    $('#voirListeRecettes').show();
+    if (!search) // si pas de recherche de recette, on affiche le bouton retour aux recettes
+        $('#voirListeRecettes').show();
     $('#modifierFormBtn').hide();
     $('#loader').hide();
 }
@@ -239,7 +247,7 @@ function autoCompleteIngredients(ingredientsList) {
                 isSelected = true; // Set flag to true when a valid option is selected
                 $("#selectedOptions").append("<li class='item'><button type='button' class='buttonItem remove-item'><span style='background-size: cover; background-image:url(" + ingredientsList[ui.item.value] + ")' class='item-image'></span><p class='item-titre'>" + ui.item.value + "</p></button></li>");
                 searchIngredients.push(ui.item.value);
-                if (searchIngredients.length > 2) {
+                if (searchIngredients.length > 1) {
                     $("#searchIngredientButton").show();
                 }
                 $(this).val('');
@@ -253,9 +261,20 @@ function autoCompleteIngredients(ingredientsList) {
             }
         });
     } else {
-        $("#autocompleteSearch").autocomplete({disabled: true});
+        $("#autocompleteSearch").autocomplete({
+            disabled: true
+        });
+
+        $("#autocompleteSearch").on('keyup', function(e){
+            if ($("#autocompleteSearch").val().length > 2) {
+                $("#searchRecetteButton").show();
+            } else {
+                $("#searchRecetteButton").hide();
+            }
+        });
     }
 }
+
 
 
 /* Fonction pour faire la liste des ingrédients renseignés dans le formulaire d'ingrédient */
@@ -280,9 +299,11 @@ $(document).ready(function() {
         if ($(this).val() === "ingredients") {
             // Activer l'autocomplétion pour les ingrédients
             autoCompleteIngredients(ingredientsList);
+            $('#autocompleteSearch').attr('placeholder', 'Ajouter un ingrédient');
         } else {
             // Désactiver l'autocomplétion pour les recettes
             autoCompleteIngredients(null);
+            $('#autocompleteSearch').attr('placeholder', 'Recette à rechercher');
         }
     });   
 
@@ -435,6 +456,18 @@ $(document).ready(function() {
             axios.post(apiUrl, params).then(reussite).catch(echec);
         }
     });
+
+    $('#searchRecetteButton').click(function(event) {
+        event.preventDefault(); // Empêche l'envoi du formulaire par défaut
+        // Récupération des valeurs du formulaire
+        $('#loader').show();
+        recipeName = $("#autocompleteSearch").val();
+        axios.get(apiDetailUrl + '?text=' + recipeName).then((data) => {
+            successDetails.call(this, data, true); // Utiliser une fonction fléchée pour conserver la portée de "this"
+        }).catch(errorDetails);
+    
+    });
+
 
     $('#btnModifier').on('click', function() {
         ingredientAModifierIndex = $(this).parent().index();
